@@ -24,14 +24,20 @@
 - `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). genome-wide complex trait analysisの略.
 - `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 遺伝子単位の相関解析手法.
 - `METAL`: [元論文](https://academic.oup.com/bioinformatics/article/26/17/2190/198154), [Webページ](https://genome.sph.umich.edu/wiki/METAL). GWASのメタ解析手法.
+- `GIANT`: [GWASのSummary Statisticsをまとめているデータベース](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files). ここには主にanthropometric (身長やBMIなど体型に関わる) データが置かれており, これを使ったメタ解析もよく行われる. これ以外にも様々なデータベースにGWASのSummary Statisticsデータは置かれている. [この論文](https://www.nature.com/articles/ng.3406)など参照. 例として[PGC (Psychiatric Genomics Consortium)](https://www.med.unc.edu/pgc/download-results/) が挙げられる.
 
 ### 関連の解析手法
-- `LD score regression (LDSR)`: よく使われるソフトウェア: `LDSC`.
+- `LD score regression (LDSR)`: 
+  - よく使われるソフトウェア: `LDSC`.
 - `Polygenic risk score (PRS)`: 
-polygenic score (PGS), risk profile scoring, genetic scoring, genetic risk scoringなどと呼ばれたりもする. よく使われるソフトウェア: `LDpred`, `PRSice`.
+polygenic score (PGS), risk profile scoring, genotype score, genetic scoring, genetic risk scoringなどと呼ばれたりもする. 注目している形質に各SNPj (計M個のSNPs) が与える効果サイズwj (通常GWASの結果そのままでなく, PRSの計算に使うSNPsの値だけで標準化?) を線型結合した値として, 各個体iについて以下の式で定義され, その個体の注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
+<img src="https://latex.codecogs.com/gif.latex?PGS_i&space;=&space;\sum&space;_{j=1}&space;^M&space;a_{ij}w_j" title="PGS_i = \sum _{j=1} ^M a_{ij}w_j" /> <br>
+しかし当然, 単純な線形結合で表すので, 劣性/顕性以外の複雑な遺伝様式は仮定しないし, 遺伝子間の相互作用 (epistasis) も考えない.<br>
+どのSNPsをPRSの計算に用いるかについて, GWASで有意となった (一般に5.0×10^-8が使われる) SNPsだけでもいいし, 全てのSNPsを使ってもいい. これは注目している表現型や目的による. polygenicな背景がないと考えられる表現型であれば, より厳しい閾値でSNPsを減らすのがいいが, そうでなければ逆である.
+  - よく使われるソフトウェア: `LDpred`, `PRSice`.
 - `Mendelian Randomization (MR)`: [元論文](https://academic.oup.com/ije/article/32/1/1/642797). 医学/疫学分野でよく行われるランダム化比較試験 (RCT; 被験者をランダムに2群に分け, 交絡要因の影響を群間で等しくした上で, 見たい治療や薬の効果を調べる) のランダム化の部分を遺伝的変異の情報を用いて行うというもの. 形質との関連に交絡要因を含まないことや逆の因果関係を持たないことから, 遺伝的変異を操作変数として形質に影響を及ぼす因子との関連を推定できると考えられる.<br>
 例えば, コーヒー摂取が肺がんに及ぼす影響を知りたい. この時, 喫煙というコーヒー摂取と肺がん罹患の両者に影響する交絡因子が考えられる. これまでであれば, 喫煙量を群間でコントロールした上でコーヒー摂取/非摂取群を作り, 肺がんに及ぼす影響を調べていた. しかしMRでは, コーヒー摂取と強く相関する遺伝的変異をGWASで特定した上で, その遺伝子型で2群を分け, 肺がんリスクを群間で比較する, という研究になる.<br>
-MRにおいては, 1)遺伝的変異はリスク因子と関連し, 2)遺伝的変異は交絡因子とは独立であり, 3)遺伝的変異はリスク因子を経てのみ, 調べたい表現型に影響する、という前提が重要であり, これに当てはまらない場合は利用できない. 例えば, 遺伝子が多面効果を持ち, 交絡因子と関連してしまう場合が挙げられる. また, 集団の構造やLDの問題など, 遺伝的変異の選択においても注意が必要である.
+MRにおいては, 1) 遺伝的変異はリスク因子と関連し, 2) 遺伝的変異は交絡因子とは独立であり, 3) 遺伝的変異はリスク因子を経てのみ, 調べたい表現型に影響する, という前提が重要であり, これに当てはまらない場合は利用できない. 例えば, 遺伝子が多面効果を持ち, 交絡因子と関連してしまう場合が挙げられる. また, 集団の構造やLDの問題など, 操作する遺伝的変異の選択においても注意が必要.
 
 ### 関連項目
 - Ridge/Lasso (回帰): 過学習を抑えるために正則化項の概念を入れた線形回帰のこと.
