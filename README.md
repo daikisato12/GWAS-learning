@@ -4,8 +4,8 @@
 
 ### 解析における一般的な注意点
 解析に用いる個体
-- 血縁関係にある個体 (e.g. PI_HAT > 0.12) を除く.
 - call rateの低い (e.g. <0.98) 個体を除く.
+- 血縁関係にある個体 (e.g. PI_HAT > 0.12) を除く.
 - (ヒトの場合) 自己申告と遺伝的な性が一致しない人を除く. 
 - 表現型との混交を避けるため, 同一集団に由来する遺伝的背景が均一な個体を使い, 内部の集団構造が存在しないことが重要. PCAにより, 各集団から外れる個体を除くなど.
 
@@ -15,7 +15,7 @@
 - (計算の煩雑さのため?) 遺伝子型が2つの (Biallelicな) SNPsのみを対象とする.
 
 ### 使われる手法
-- `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢, 集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
+- `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢, 遺伝的な集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
 - `BOLT-LMM`: [元論文](https://www.nature.com/articles/ng.3190). Bayesian linear mixed-model associationを採用. GWASに使われる既存の混合モデルでは計算に時間がかかりすぎる (O(M^2N)あるいはO(MN^2)) のをO(MN)の繰り返しまでに改良している (ここをM < Nになるようマーカー自体を減らすというアイデアで実装したのが`FaST-LMM`) . また, 既存のLMMのように全てのSNPsが独立な正規分布に従う小さな効果サイズを持つと仮定するのではなく, あらかじめ二つの事前正規分布を仮定するベイズ過程によって, それぞれのSNPsの効果サイズの大小を正確に推定していく.
   - 最近の大きな論文では大抵使われている. 基本的にヒトを対象とする, 大きな (sample size > 5000) データセットに向いているらしい. sample size < 5000 の場合は`GCTA`あるいは`GEMMA`を推奨とのこと. 潜在的な集団構造/個人間の血縁度を補正してくれるのでPCAのスコアは入れる必要なし.
 - `FaST-LMM`: [元論文](https://www.nature.com/articles/nmeth.1681). 混合モデルでは計算に時間がかかりすぎるという問題点をM < Nになるようマーカー自体を減らすというアイデアで実装している.
@@ -29,7 +29,7 @@ polygenic score (PGS), risk profile scoring, genetic scoring, genetic risk scori
 - `Mendelian Randomization (MR)`: [元論文](https://academic.oup.com/ije/article/32/1/1/642797). 
 
 ### 関連項目
-- Lasso/Ridge (回帰): 過学習を抑えるために正則化項の概念を入れた線形回帰のこと.
+- Ridge/Lasso (回帰): 過学習を抑えるために正則化項の概念を入れた線形回帰のこと.
 - 正則化 (項): 線形回帰において, 各変数の標準偏回帰係数の大きさ (これが大きいとデータに無理に当てはめていることになる) にペナルティを与えるため損失関数に入れる項.<br>
 <img src="https://latex.codecogs.com/gif.latex?E_{OLS}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2" title="\sum _{i=1}^{N} (y_i - \widehat{y})^2" /><br>
 これが線形回帰における基本的な損失関数 (最小2乗法) だが, Ridge回帰およびLasso回帰の場合は<br>
