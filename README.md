@@ -5,7 +5,7 @@
 ### 解析における一般的な注意点
 解析に用いる個体
 - call rateの低い (e.g. <0.98) 個体を除く.
-- 血縁関係にある個体 (e.g. PI_HAT > 0.12) を除く.
+- 血縁関係にある個体 (e.g. PI_HAT > 0.12, p(IBD = 0) < 0.05 etc.) を除く.
 - (ヒトの場合) 自己申告と遺伝的な性が一致しない人を除く. 
 - 表現型との混交を避けるため, 同一集団に由来する遺伝的背景が均一な個体を使い, 内部の集団構造が存在しないことが重要. PCAにより, 各集団から外れる個体を除くなど.
 
@@ -13,15 +13,17 @@
 - call rateの低い (e.g. <0.99) SNPsを除く.
 - ジェノタイピングのエラーを避けるため, マイナーアリル頻度（Minor Allele Frquency: MAF）が低い (e.g. <1%) SNPsは排除する. サンプル数が多ければ, 低頻度のアリルもエラーでなく捉えることができるため, この閾値はサンプル数に依存する.
 - (計算の煩雑さのため?) 遺伝子型が2つの (Biallelicな) SNPsのみを対象とする.
-- Hardy–Weinberg Equilibriumに沿わない (e.g. p < 1×10^–6) SNPsは除く
+- Hardy–Weinberg Equilibriumに沿わない (e.g. p < 1×10^–6) SNPsは除く.
 
 ### 使われる手法
-- `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢, 遺伝的な集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
+- `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢 (, 年齢^2), 遺伝的な集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
 - `BOLT-LMM`: [元論文](https://www.nature.com/articles/ng.3190). Bayesian linear mixed-model associationを採用. GWASに使われる既存の混合モデルでは計算に時間がかかりすぎる (O(M^2N)あるいはO(MN^2)) のをO(MN)の繰り返しまでに改良している (ここをM < Nになるようマーカー自体を減らすというアイデアで実装したのが`FaST-LMM`) . また, 既存のLMMのように全てのSNPsが独立な正規分布に従う小さな効果サイズを持つと仮定するのではなく, あらかじめ二つの事前正規分布を仮定するベイズ過程によって, それぞれのSNPsの効果サイズの大小を正確に推定していく.
   - 最近の大きな論文では大抵使われている. 基本的にヒトを対象とする, 大きな (sample size > 5000) データセットに向いているらしい. sample size < 5000 の場合は`GCTA`あるいは`GEMMA`を推奨とのこと. 潜在的な集団構造/個人間の血縁度を補正してくれるのでPCAのスコアは入れる必要なし.
 - `FaST-LMM`: [元論文](https://www.nature.com/articles/nmeth.1681). 混合モデルでは計算に時間がかかりすぎるという問題点をM < Nになるようマーカー自体を減らすというアイデアで実装している.
 - `GEMMA`: [元論文](https://www.nature.com/articles/ng.2310). Genome-wide efficient mixed-model analysisの略.
 - `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). genome-wide complex trait analysisの略.
+- `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 遺伝子単位の相関解析手法.
+- `METAL`: [元論文](https://academic.oup.com/bioinformatics/article/26/17/2190/198154), [Webページ](https://genome.sph.umich.edu/wiki/METAL). GWASのメタ解析手法.
 
 ### 関連の解析手法
 - `LD score regression (LDSR)`: よく使われるソフトウェア: `LDSC`.
@@ -38,7 +40,7 @@ MRにおいては, 1)遺伝的変異はリスク因子と関連し, 2)遺伝的�
 これが線形回帰における基本的な損失関数 (最小2乗法) だが, Ridge回帰およびLasso回帰の場合は<br>
 <img src="https://latex.codecogs.com/gif.latex?E_{Ridge}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2&space;&plus;&space;\frac{1}{2}&space;\lambda&space;\sum&space;_{k=1}^{K}&space;\beta_k&space;^2" title="E_{Ridge} = \sum _{i=1}^{N} (y_i - \widehat{y})^2 + \frac{1}{2} \lambda \sum _{k=1}^{K} \beta_k ^2" /><br>
 <img src="https://latex.codecogs.com/gif.latex?E_{Lasso}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2&space;&plus;&space;\lambda&space;\sum&space;_{k=1}^{K}&space;\left&space;|\beta_k&space;\right&space;|" title="E_{Lasso} = \sum _{i=1}^{N} (y_i - \widehat{y})^2 + \lambda \sum _{k=1}^{K} \left |\beta_k \right |" /><br>
-と, それぞれ項 (Ridge回帰では偏回帰係数の2乗和(L2正則化項), Lasso回帰では偏回帰係数の絶対値の和(L1正則化項)) が増えている. この二つは偏回帰係数の減衰の仕方が異なり, Ridge回帰は少しずつ偏回帰係数を小さくしていくのに対して, Lasso回帰は影響度の小さい説明変数の偏回帰係数を0にしていく. すなわち, Ridge回帰は全体の説明変数を使用しつつ偏回帰係数を小さくするのに対して、Lasso回帰は変数を選択して線形回帰を行っていると解釈できる.
+と, それぞれ項 (Ridge回帰では偏回帰係数の2乗和 (L2正則化項), Lasso回帰では偏回帰係数の絶対値の和 (L1正則化項)) が増えている. この二つは偏回帰係数の減衰の仕方が異なり, Ridge回帰は少しずつ偏回帰係数を小さくしていくのに対して, Lasso回帰は影響度の小さい説明変数の偏回帰係数を0にしていく. すなわち, Ridge回帰は全体の説明変数を使用しつつ偏回帰係数を小さくするのに対して、Lasso回帰は変数を選択して線形回帰を行っていると解釈できる.
 
 
 
