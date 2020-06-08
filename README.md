@@ -13,6 +13,7 @@
 - call rateの低い (e.g. <0.99) SNPsを除く.
 - ジェノタイピングのエラーを避けるため, マイナーアリル頻度（Minor Allele Frquency: MAF）が低い (e.g. <1%) SNPsは排除する. サンプル数が多ければ, 低頻度のアリルもエラーでなく捉えることができるため, この閾値はサンプル数に依存する.
 - (計算の煩雑さのため?) 遺伝子型が2つの (Biallelicな) SNPsのみを対象とする.
+- Hardy–Weinberg Equilibriumに沿わない (e.g. p < 1×10^–6) SNPsは除く
 
 ### 使われる手法
 - `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢, 遺伝的な集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
@@ -23,7 +24,7 @@
 - `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). genome-wide complex trait analysisの略.
 
 ### 関連の解析手法
-- `LD score regression (LDSC)`: 
+- `LD score regression (LDSR)`: よく使われるソフトウェア: `LDSC`.
 - `Polygenic risk score (PRS)`: 
 polygenic score (PGS), risk profile scoring, genetic scoring, genetic risk scoringなどと呼ばれたりもする. よく使われるソフトウェア: `LDpred`, `PRSice`.
 - `Mendelian Randomization (MR)`: [元論文](https://academic.oup.com/ije/article/32/1/1/642797). 医学/疫学分野でよく行われるランダム化比較試験 (RCT; 被験者をランダムに2群に分け, 交絡要因の影響を群間で等しくした上で, 見たい治療や薬の効果を調べる) のランダム化の部分を遺伝的変異の情報を用いて行うというもの. 形質との関連に交絡要因を含まないことや逆の因果関係を持たないことから, 遺伝的変異を操作変数として形質に影響を及ぼす因子との関連を推定できると考えられる.<br>
