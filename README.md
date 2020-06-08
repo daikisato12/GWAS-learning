@@ -16,9 +16,9 @@
 
 ### 使われる手法
 - `線形混合モデル (LMM: Linear Mixed Model)`: SNPの効果 + 性別や年齢, 集団構造 (e.g. PC1–10) を説明変数として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に後述のモデルは全てこの改良版.
-- `BOLT-LMM`: [元論文](https://www.nature.com/articles/ng.3190). Bayesian linear mixed-model associationを採用. GWASに使われる既存の混合モデルでは計算に時間がかかりすぎる ($O(M^2N)$あるいは$O(MN^2)$) のを$O(MN)$の繰り返しまでに改良している (ここを$M < N$になるようマーカー自体を減らすというアイデアで実装したのが`FaST-LMM`) . また, 既存のLMMのように全てのSNPsが独立な正規分布に従う小さな効果サイズを持つと仮定するのではなく, あらかじめ二つの正規事前分布を仮定するベイズ過程によって, それぞれのSNPsの効果サイズの大小を正確に推定していく.
+- `BOLT-LMM`: [元論文](https://www.nature.com/articles/ng.3190). Bayesian linear mixed-model associationを採用. GWASに使われる既存の混合モデルでは計算に時間がかかりすぎる (O(M^2N)あるいはO(MN^2)) のをO(MN)の繰り返しまでに改良している (ここをM < Nになるようマーカー自体を減らすというアイデアで実装したのが`FaST-LMM`) . また, 既存のLMMのように全てのSNPsが独立な正規分布に従う小さな効果サイズを持つと仮定するのではなく, あらかじめ二つの正規事前分布を仮定するベイズ過程によって, それぞれのSNPsの効果サイズの大小を正確に推定していく.
   - 最近の大きな論文では大抵使われている. 基本的にヒトを対象とする, 大きな (sample size > 5000) データセットに向いているらしい. sample size < 5000 の場合は`GCTA`あるいは`GEMMA`を推奨とのこと. 潜在的な集団構造/個人間の血縁度を補正してくれるのでPCAのスコアは入れる必要なし.
-- `FaST-LMM`: [元論文](https://www.nature.com/articles/nmeth.1681). 混合モデルでは計算に時間がかかりすぎるという問題点を$M < N$になるようマーカー自体を減らすというアイデアで実装している.
+- `FaST-LMM`: [元論文](https://www.nature.com/articles/nmeth.1681). 混合モデルでは計算に時間がかかりすぎるという問題点をM < Nになるようマーカー自体を減らすというアイデアで実装している.
 - `GEMMA`: [元論文](https://www.nature.com/articles/ng.2310). Genome-wide efficient mixed-model analysisの略.
 - `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). genome-wide complex trait analysisの略.
 
