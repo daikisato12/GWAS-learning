@@ -35,8 +35,7 @@ polygenic score (PGS), risk profile scoring, genetic scoring, genetic risk scori
 これが線形回帰における基本的な損失関数 (最小2乗法) だが, Ridge回帰およびLasso回帰の場合は<br>
 <img src="https://latex.codecogs.com/gif.latex?E_{Ridge}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2&space;&plus;&space;\frac{1}{2}&space;\lambda&space;\sum&space;_{k=1}^{K}&space;\beta_k&space;^2" title="E_{Ridge} = \sum _{i=1}^{N} (y_i - \widehat{y})^2 + \frac{1}{2} \lambda \sum _{k=1}^{K} \beta_k ^2" /><br>
 <img src="https://latex.codecogs.com/gif.latex?E_{Lasso}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2&space;&plus;&space;\lambda&space;\sum&space;_{k=1}^{K}&space;\left&space;|\beta_k&space;\right&space;|" title="E_{Lasso} = \sum _{i=1}^{N} (y_i - \widehat{y})^2 + \lambda \sum _{k=1}^{K} \left |\beta_k \right |" /><br>
-と, それぞれ項 (Ridge回帰では偏回帰係数の2乗和(L2正則化項), Lasso回帰では偏回帰係数の絶対値の和(L1正則化項)) が増えている.<br>
-この二つは偏回帰係数の減衰の仕方が異なり, Ridge回帰は少しずつ偏回帰係数を小さくしていくのに対して, Lasso回帰は影響度の小さい説明変数の偏回帰係数を0にしていく. すなわち, Ridge回帰は全体の説明変数を使用しつつ偏回帰係数を小さくするのに対して、Lasso回帰は変数を選択して線形回帰を行っていると解釈できる.
+と, それぞれ項 (Ridge回帰では偏回帰係数の2乗和(L2正則化項), Lasso回帰では偏回帰係数の絶対値の和(L1正則化項)) が増えている. この二つは偏回帰係数の減衰の仕方が異なり, Ridge回帰は少しずつ偏回帰係数を小さくしていくのに対して, Lasso回帰は影響度の小さい説明変数の偏回帰係数を0にしていく. すなわち, Ridge回帰は全体の説明変数を使用しつつ偏回帰係数を小さくするのに対して、Lasso回帰は変数を選択して線形回帰を行っていると解釈できる.
 
 
 
