@@ -37,8 +37,7 @@
 ### 関連の解析手法
 - `LD score (LDSC)`: [元論文](https://www.nature.com/articles/ng.3211). あるSNPについて, 他の全てのSNPsとのLD (r^2) を合計したものが, そのSNPのLD scoreである. LD scoreを用いることで, ある形質のSNP-baseの遺伝率を計算したり, [独立な形質間の遺伝的な相関を計算する](https://www.nature.com/articles/ng.3406)ことができる. 必要なデータはGWASのSummary StatisticsとLDのデータ ([1KGについて計算したもの](https://data.broadinstitute.org/alkesgroup/LDSCORE/)がよく使われる) だけであり, 簡便に計算することができる. MAFが小さい (<1%) SNPsはLD scoreの分散が大きいため除かれるほか, 効果サイズが非常に大きいものや, LDの範囲が非常に長いものも除かれる. また, LDの計算に用いられたサンプルと, GWASが行われたサンプルが遺伝的に離れているとbiasが生じるので, できる限り近いものを用いる.
   - よく使われるソフトウェア: `LDSC` ([リンク](https://github.com/bulik/ldsc)).
-- `Polygenic score (PGS)`: 
-特に疾患を対象にする場合はpolygenic risk score (PRS), risk profile scoring, genetic risk scoring, またgenotype score, genetic scoringなどと呼ばれたりもする. 注目している形質に各SNPj (計M個のSNPs) が与える効果サイズwj (通常GWASの結果そのままでなく, PGSの計算に使うSNPsの値だけで標準化?) を線型結合した値として, 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
+- `Polygenic score (PGS)`: 特に疾患を対象にする場合はpolygenic risk score (PRS), risk profile scoring, genetic risk scoring, またgenotype score, genetic scoringなどと呼ばれたりもする. 注目している形質に各SNPj (計M個のSNPs) が与える効果サイズwj (通常GWASの結果そのままでなく, PGSの計算に使うSNPsの値だけで標準化?) を線型結合した値として, 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
 <img src="https://latex.codecogs.com/gif.latex?PGS_i&space;=&space;\sum&space;_{j=1}&space;^M&space;a_{ij}w_j" title="PGS_i = \sum _{j=1} ^M a_{ij}w_j" /> <br>
 しかし当然, 単純な線形結合で表すので, 劣性/顕性以外の複雑な遺伝様式は仮定しないし, 遺伝子間の相互作用 (epistasis) も考えない.<br>
 どのSNPsをPRSの計算に用いるかについて, GWASで有意となった (一般に閾値として p < 5.0×10^-8 が使われる) SNPsだけでもいいし, 全てのSNPsを使ってもいい. これは注目している表現型や目的による. polygenicな背景がないと考えられる表現型であれば, より厳しい閾値でSNPsを減らすのがいいが, そうでなければ逆である. 用いるSNPsを増やせば予測能力が上がる気がするが, 実際にはノイズも増やすので, ここにトレードオフが存在する.<br>
