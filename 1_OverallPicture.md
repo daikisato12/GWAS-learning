@@ -27,9 +27,9 @@
 - `SAIGE`: [元論文](https://www.nature.com/articles/s41588-018-0184-y). 2018年. Scalable and Accurate Implementation of GEneralized mixed modelの略. binary dataに対して, 2020年時点で最新・比較的有力な手法. メモリ使用量や計算時間が大幅に削られ, 偏ったcase-control比でも解析できるのが, `GMMAT`からの改良点であり, 強み.
 #### Gene (region)-baseモデル
 頻度の低いアリルに関しては, variantベースの手法では検出力が低いという問題があるので, 遺伝子あるいは領域ベースの手法がよく用いられる.
-- `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 遺伝子単位の相関解析手法の一種だが, enrichしているパスウェイの特定に使われる.
-- `SMMAT`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(18)30465-8). 遺伝子単位の相関解析手法. 集団構造や血縁関係を補正するため, 一般化線形混合モデルを採用. O(N^3)の計算時間とO(N^2)のメモリ使用量がネックだった (下の`SAIGE-GENE`では改善).
-- `SAIGE-GENE`: [元論文](https://www.biorxiv.org/content/10.1101/583278v2). 2020年6月時点で一番新しい, 遺伝子 (or 領域) 単位の相関解析手法. 近縁関係にある個体も使うことができるので, サンプルサイズを増やすことができるという利点がある. `SAGE`同様, 2値形質を対象とする.
+- `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 2010年. 遺伝子単位の相関解析手法の一種だが, enrichしているパスウェイの特定に使われる.
+- `SMMAT`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(18)30465-8). 2019年. 遺伝子単位の相関解析手法. 集団構造や血縁関係を補正するため, 一般化線形混合モデルを採用. O(N^3)の計算時間とO(N^2)のメモリ使用量がネックだった (下の`SAIGE-GENE`では改善).
+- `SAIGE-GENE`: [元論文](https://www.biorxiv.org/content/10.1101/583278v2). 2020年. 2020年6月時点で一番新しい, 遺伝子 (or 領域) 単位の相関解析手法. 近縁関係にある個体も使うことができるので, サンプルサイズを増やすことができるという利点がある. `SAGE`同様, 2値形質を対象とする.
 #### その他
 - `METAL`: [元論文](https://academic.oup.com/bioinformatics/article/26/17/2190/198154), [Webページ](https://genome.sph.umich.edu/wiki/METAL). GWASのメタ解析手法.
 - `GIANT`: [GWASのSummary Statisticsをまとめているデータベース](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files). ここには主にanthropometric (身長やBMIなど体型に関わる) データが置かれており, これを使ったメタ解析もよく行われる. これ以外にも様々なデータベースにGWASのSummary Statisticsデータは置かれている. [この論文](https://www.nature.com/articles/ng.3406)など参照. 例として[PGC (Psychiatric Genomics Consortium)](https://www.med.unc.edu/pgc/download-results/) が挙げられる. [Neale Lab](http://www.nealelab.is/uk-biobank)がUK Biobankのデータをまとめている. 日本人のデータであればRIKENの[JENGER](http://jenger.riken.jp/en/)がまとめているものもある.
@@ -42,7 +42,7 @@
 しかし当然, 単純な線形結合で表すので, 劣性/顕性以外の複雑な遺伝様式は仮定しないし, 遺伝子間の相互作用 (epistasis) も考えない.<br>
 どのSNPsをPRSの計算に用いるかについて, GWASで有意となった (一般に閾値として p < 5.0×10^-8 が使われる) SNPsだけでもいいし, 全てのSNPsを使ってもいい. これは注目している表現型や目的による. polygenicな背景がないと考えられる表現型であれば, より厳しい閾値でSNPsを減らすのがいいが, そうでなければ逆である. 用いるSNPsを増やせば予測能力が上がる気がするが, 実際にはノイズも増やすので, ここにトレードオフが存在する.<br>
 PGSの運用においては, まず"Discovery/Base"集団にGWASを行った上で, 独立した"Target"集団にその結果を用いて, その予測性能を確認するという一連の流れが取られる. この時, 様々なP値の閾値を設定し, PRSの計算に用いるSNPsを決めるようである. また, [Discovery集団とTarget集団が遺伝的に離れていると, 正確な予測ができないことが知られている](https://www.cell.com/ajhg/fulltext/S0002-9297(17)30107-6).
-  - よく使われるソフトウェア: `LDpred` [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407).
+  - よく使われるソフトウェア: `LDpred` [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info).
 - `Mendelian Randomization (MR)`: [元論文](https://academic.oup.com/ije/article/32/1/1/642797). 医学/疫学分野でよく行われるランダム化比較試験 (RCT; 被験者をランダムに2群に分け, 交絡要因の影響を群間で等しくした上で, 見たい治療や薬の効果を調べる) のランダム化の部分を遺伝的変異の情報を用いて行うというもの. 形質との関連に交絡要因を含まないことや逆の因果関係を持たないことから, 遺伝的変異を操作変数として形質に影響を及ぼす因子との関連を推定できると考えられる.<br>
 例えば, コーヒー摂取が肺がんに及ぼす影響を知りたい. この時, 喫煙というコーヒー摂取と肺がん罹患の両者に影響する交絡因子が考えられる. これまでであれば, 喫煙量を群間でコントロールした上でコーヒー摂取/非摂取群を作り, 肺がんに及ぼす影響を調べていた. しかしMRでは, コーヒー摂取と強く相関する遺伝的変異をGWASで特定した上で, その遺伝子型で2群を分け, 肺がんリスクを群間で比較する, という研究になる.<br>
 MRにおいては, 1) 遺伝的変異はリスク因子と関連し, 2) 遺伝的変異は交絡因子とは独立であり, 3) 遺伝的変異はリスク因子を経てのみ, 調べたい表現型に影響する, という前提が重要であり, これに当てはまらない場合は利用できない. 例えば, 遺伝子が多面効果を持ち, 交絡因子と関連してしまう場合が挙げられる. また, 集団の構造やLDの問題など, 操作する遺伝的変異の選択においても注意が必要.

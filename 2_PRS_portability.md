@@ -3,7 +3,7 @@
 
 
 ### Discovery / Target sampleの相違について
-PGSの計算に用いるSummary Statistics (要は各SNPsの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文を参考にする.
+PGSの計算に用いるSummary Statistics (要は各SNPsの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文が参考になる.
 
 #### [Scutari et al. 2016](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006288)
 Training (discovery) sampleとTarget sampleの遺伝的距離 (Fstあるいは平均血縁度) が遠いほど, 予測能力が下がることを示した. この予測能力の低下はアリル頻度とLDの違いに起因する.
