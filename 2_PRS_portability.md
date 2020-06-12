@@ -27,9 +27,9 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 
 (図2) 祖先の異なる複数の集団を対象とするGWAS研究のデータを使い, Discoveryをヨーロッパ集団, Targetを非ヨーロッパ集団でPerformanceを比較する (？). ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. 
 
-ちなみに, 連続形質yの分散のうち, SNP遺伝子型xで説明される割合を$R^2$とし, これは決定係数と呼ばれる (相関係数の二乗). アリル頻度が$p$の時,
-<img src="https://latex.codecogs.com/gif.latex?R^2&space;=&space;2p&space;(1-p)\beta" title="R^2 = 2p (1-p)\beta" />
-<img src="https://latex.codecogs.com/gif.latex?R^2&space;\fallingdotseq&space;0.5p(1-p)(log(OR))^2" title="R^2 \fallingdotseq 0.5p(1-p)(log(OR))^2" />
+ちなみに, 連続形質yの分散のうち, SNP遺伝子型xで説明される割合を$R^2$とし, これは決定係数と呼ばれる (相関係数の二乗). アリル頻度が$p$の時, <br>
+<img src="https://latex.codecogs.com/gif.latex?R^2&space;=&space;2p&space;(1-p)\beta" title="R^2 = 2p (1-p)\beta" /><br>
+<img src="https://latex.codecogs.com/gif.latex?R^2&space;\fallingdotseq&space;0.5p(1-p)(log(OR))^2" title="R^2 \fallingdotseq 0.5p(1-p)(log(OR))^2" /><br>
 が[成り立つらしい](http://103.253.147.127/PUBLICATIONS/riken.110916.pdf).
 
 (図4) 同じヨーロッパでもDiscovery datasetがGIANTの時はPGSと実際の身長との相関が高いが, UKBの時はそうではない. <- 下記のようにGIANTは集団構造の補正が十分でない可能性が示唆されており, これが原因かもしれない. Discovery :ヨーロッパ / Target: アジア の組み合わせの時はそこそこ予測性能が良いのに対して, 逆の時はそうでもない. <- Discoveryに使われているアジアのデータセットはサンプルサイズがそこまで多くなく ([He et al. 2015](https://academic.oup.com/hmg/article/24/6/1791/685282); N = 93,236だけど), 検出力が高くないことが原因かもしれない. 
