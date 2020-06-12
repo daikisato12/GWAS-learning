@@ -16,11 +16,28 @@ Training (discovery) sampleとTarget sampleの遺伝的距離 (Fstあるいは�
 #### [Grinde et al. 2018](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.22166)
 European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集団に用いてPGSを計算した結果, 概ね予測性能は良かったが, 血圧に関してはそうではなかった.
 
+#### [Curtis 2018](https://journals.lww.com/psychgenetics/Fulltext/2018/10000/Polygenic_risk_score_for_schizophrenia_is_more.2.aspx)
+ヨーロッパ集団を用いた統合失調症のGWASから計算されたPRSを祖先の異なる集団に用いると, 統合失調症という表現型そのものよりも祖先の集団による差が大きい.
+
 #### [Martin et al. 2019](https://www.nature.com/articles/s41588-019-0379-x)
 もっとヨーロッパ集団以外のデータを増やさないとね, というコメンタリー論文.
 
 #### [Duncan et al. 2019](https://www.nature.com/articles/s41467-019-11112-0)
-祖先集団によって予測性能は大幅に異なることが分かった.
+2008-2017年に出版されたPolygenic scoreを使った研究を調べた結果, 67%がヨーロッパに祖先を持つ集団のみを対象, 19%が東アジア集団のみを対象, 3.8%のみがアフリカ系やヒスパニック, 現地人集団だった.
+
+ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった.
+
+### GWAS時点で遺伝的集団構造が十分に補正されていないという問題点
+GIANTやR15-sibsとUKBのデータセットをそれぞれ使ったPRSの傾向が一致しないことがあり, GWAS時点でデータセット内部の集団構造が十分に補正されていないという問題点が指摘されている. 
+
+#### [Sohail et al. 2019](https://elifesciences.org/articles/39702)
+
+#### [Uricchio et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
+GIANTデータセットの集団構造の補正が不十分であった可能性を示す.
+
+#### [Berg et al. 2019](https://elifesciences.org/articles/39725)
+ヨーロッパ集団で身長に対してpolygenic adaptationが起きていると言われているが, それまでGIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した結果, シグナルは消えたという. GWASの時点の集団構造の補正がPGSの計算に不十分であった可能性を示す. 
+
 
 ### PGSの計算について
 - `LDpred`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), [リンク](https://github.com/bvilhjal/ldpred). 
