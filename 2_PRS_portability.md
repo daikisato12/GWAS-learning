@@ -60,9 +60,14 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 ### Polygenic adaptation, PGSと自然選択の関係
 #### [Pritchard et al. 2010](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
-#### [Berg et al. 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)
-この研究から (？) 集団レベルでのPGSについて以下の定式化がなされた. 計L個の各SNP (の効果アリル) がαの効果サイズを持つ時, 各SNP (の効果アリル) の集団内での頻度pを用いて, その集団mについて平均のgenetic value/effective sizeが求められる. <br>
+#### [Kemper et al. 2014](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
+自然選択の検出により少数の表現型に寄与する遺伝子座は特定できるが, 全体としては, 形質に影響する遺伝子座と自然選択の間に相関は見つけられない. 複雑な形質は古典的な自然選択の痕跡を残さないため, そうした遺伝子座を自然選択の検出により見つけることは難しい.
+
+#### [Berg & Coop 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)
+集団レベルでのPGS (この研究ではmean genetic valueと呼ばれる) は以下の式で表される (Fisher 1930). 計L個の各SNP (の効果アリル) がαの効果サイズを持つ時, 各SNP (の効果アリル) の集団内での頻度pを用いて, その集団mについてmean genetic value/effective sizeが求められる. <br>
 <img src="https://latex.codecogs.com/gif.latex?Z_m&space;=&space;2\sum&space;_{l=1}^L&space;\alpha_lp_{ml}" title="Z_m = 2\sum _{l=1}^L \alpha_lp_{ml}" /><br>
+
+本研究では, genetic valueの同時 (確率) 分布を求める集団遺伝学的なモデリングにより, 集団構造の効果を取り除くことで, 遺伝的浮動の効果ではなく自然選択がどのように遺伝子座に働くかを示している. 有意に選択が働いている遺伝子座を特定するだけでなく, 選択が働いている集団を特定することも可能.
 
 #### [Field et al. 2016](https://science.sciencemag.org/content/354/6313/760)
 SDSを開発した論文.
