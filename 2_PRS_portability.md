@@ -1,6 +1,6 @@
 ### Polygenic score (PGS)とは？
-ある形質についてのGWASの結果から得られた各SNPsの効果サイズを, 独立なサンプルの各SNPのアリル数に掛け合わせたスコア (`1_OveralPicture.md`参照). 個体の形質に対する遺伝的な傾向/リスクを評価することができる. 
-
+ある形質についてのGWASの結果から得られた各SNPsの効果サイズを, 独立なサンプルの各SNPのアリル数に掛け合わせたスコア (`1_OveralPicture.md`参照). 個体の形質に対する遺伝的な傾向/リスクを評価することができる. 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
+<img src="https://latex.codecogs.com/gif.latex?PGS_i&space;=&space;\sum&space;_{j=1}&space;^M&space;a_{ij}w_j" title="PGS_i = \sum _{j=1} ^M a_{ij}w_j" />
 
 ### Discovery / Target sampleの相違について
 PGSの計算に用いるSummary Statistics (要は各SNPsの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文が参考になる.
@@ -25,14 +25,14 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 #### [Duncan et al. 2019](https://www.nature.com/articles/s41467-019-11112-0)
 (図1) 2008-2017年に出版された733のPolygenic scoreを使った研究を調べた結果, 67%がヨーロッパに祖先を持つ集団のみを対象, 19%がアジア (ほぼ東アジア; 中国や日本) 集団のみを対象, 3.8%のみがアフリカ系やヒスパニック, 現地人 (ネイティブアメリカンや中東)) 集団だった.
 
-(図2) 祖先の異なる複数の集団を対象とするGWAS研究のデータを使い, Discoveryをヨーロッパ集団, Targetを非ヨーロッパ集団でPerformanceを比較する (？). ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. 
+(図2) PGSのEffect size (実際の表現型に対するPGSの説明可能性？) を複数の集団で出している先行研究のGWASデータをForest plotにしてまとめているという図.　図1と同様, これらの研究のDiscovery sampleの大半はヨーロッパ祖先集団が占めているので, その影響が大きいと思われる. ヨーロッパ集団での効果サイズと他集団での効果サイズの比を取ると, 他集団では低い → ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. 
 
 ちなみに, 連続形質yの分散のうち, あるSNPの遺伝子型xで説明される割合をR^2とし, これは決定係数と呼ばれる (相関係数の二乗). アリル頻度がpの時, <br>
 <img src="https://latex.codecogs.com/gif.latex?R^2&space;=&space;2p&space;(1-p)\beta" title="R^2 = 2p (1-p)\beta" /><br>
 <img src="https://latex.codecogs.com/gif.latex?R^2&space;\fallingdotseq&space;0.5p(1-p)(log(OR))^2" title="R^2 \fallingdotseq 0.5p(1-p)(log(OR))^2" /><br>
 が[成り立つらしい](http://103.253.147.127/PUBLICATIONS/riken.110916.pdf).
 
-(図4) 同じヨーロッパでもDiscovery datasetがGIANTの時はPGSと実際の身長との相関が高いが, UKBの時はそうではない. <- 下記のようにGIANTは集団構造の補正が十分でない可能性が示唆されており, これが原因かもしれない. Discovery :ヨーロッパ / Target: アジア の組み合わせの時はそこそこ予測性能が良いのに対して, 逆の時はそうでもない. <- Discoveryに使われているアジアのデータセットはサンプルサイズがそこまで多くなく ([He et al. 2015](https://academic.oup.com/hmg/article/24/6/1791/685282); N = 93,236だけど), 検出力が高くないことが原因かもしれない. 
+(図4) 同じヨーロッパでもDiscovery datasetがGIANTの時はPGSと実際の身長との相関が高いが, UKBの時はそうではない. ← 下記のようにGIANTは集団構造の補正が十分でない可能性が示唆されており, これが原因かもしれない. Discovery :ヨーロッパ / Target: アジア の組み合わせの時はそこそこ予測性能が良いのに対して, 逆の時はそうでもない. ← Discoveryに使われているアジアのデータセットはサンプルサイズがそこまで多くなく ([He et al. 2015](https://academic.oup.com/hmg/article/24/6/1791/685282); N = 93,236だけど), 検出力が高くないことが原因かもしれない. 
 
 (図3) Clumping (LD pruningに近い; P値の小さいSNPsの周囲で連鎖不平衡にあるSNPs同士をclump (群) とし, それらをPGSの計算から取り除く) に用いるLDの閾値や, P値の閾値によってPGSの結果が変わる. Target sampleと同じ集団のLDを元にclumpingした時に最もPGSの分布幅は狭まる. また, より多くのSNPsを使う (clumpingの際, LDの閾値を上げる/SNPのP値の閾値を上げる) ほどPGSの分布が集団間でバラつく (逆に言えば, 使うSNPsを厳しく選定するほど, 集団間でPGSの値にあまり違いがなくなる).
 
