@@ -25,7 +25,7 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 #### [Duncan et al. 2019](https://www.nature.com/articles/s41467-019-11112-0)
 (図1) 2008-2017年に出版された733のPolygenic scoreを使った研究を調べた結果, 67%がヨーロッパに祖先を持つ集団のみを対象, 19%がアジア (ほぼ東アジア; 中国や日本) 集団のみを対象, 3.8%のみがアフリカ系やヒスパニック, 現地人 (ネイティブアメリカンや中東)) 集団だった.
 
-(図2) PGSのEffect size (実際の表現型に対するPGSの説明可能性？) を祖先異なる複数の集団で出している先行研究のGWASデータをForest plotにしてまとめているという図.　図1と同様, これらの研究のDiscovery sampleの大半はヨーロッパ祖先集団が占めているので, その影響が大きいと思われる. ヨーロッパ集団での効果サイズと他集団での効果サイズの比を取ると, 他集団では低い → ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. この図, 説明があまりに少ないし, 元論文の引用もちゃんとされていないので非常に分かりづらい. また元論文でPGSの計算に使われているSNPsの基準も分かりづらい (P < 5.0×10^-8？).
+(図2) PGSのEffect size (実際の表現型とPGSの相関 (説明可能性)？) を祖先の異なる複数の集団で出している先行研究のGWASデータをForest plotにしてまとめているという図.　図1と同様, これらの研究のDiscovery sampleの大半はヨーロッパ祖先集団が占めているので, その影響が大きいと思われる. ヨーロッパ集団での効果サイズと他集団での効果サイズの比を取ると, 他集団では低い → ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. この図, 説明があまりに少ないし, 元論文の引用もちゃんとされていないので非常に分かりづらい. また元論文でPGSの計算に使われているSNPsの基準も分かりづらい (P < 5.0×10^-8？).
 
 ちなみに, 連続形質yの分散のうち, あるSNPの遺伝子型xで説明される割合をR^2とし, これは決定係数と呼ばれる (相関係数の二乗). アリル頻度がpの時, <br>
 <img src="https://latex.codecogs.com/gif.latex?R^2&space;=&space;2p&space;(1-p)\beta" title="R^2 = 2p (1-p)\beta" /><br>
@@ -59,5 +59,6 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 
 
 ### PGSの計算について
-- `LDpred`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), [リンク](https://github.com/bvilhjal/ldpred). 
-- `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info).
+- `LDpred`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), [リンク](https://github.com/bvilhjal/ldpred). GWASで出力された各SNPの効果サイズを, その集団のLD情報を用いて補正するというもの. 特にサンプルサイズの大きいと, LD clumping → P値の閾値設定 よりも正確らしい.
+- `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info). 複数のP値/LDの閾値で計算し, 最も説明力の高い条件探索を行うことができる. また複数形質も一度に計算してくれる.
+- 予測性能をどう表現するか: 実際の表現型とPGSの間の決定係数 (R^2) がよく使われる. ただ[色々な補正手法が開発されている](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.21614).
