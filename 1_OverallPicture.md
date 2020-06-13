@@ -14,10 +14,13 @@
 - (計算の煩雑さのため?) 遺伝子型が2つの (Biallelicな) SNPsのみを対象とする.
 - Hardy–Weinberg Equilibriumに沿わない (e.g. p < 1×10^–6) SNPsは除く.
 
+慣習みたいなもの
+- 0.05を100万 (一般に解析に用いるSNPsが100万あるとして) で割った, 5.0 × 10^-8 がSNPの優位性を示すP値の閾値として使われることが多い. 1.0 × 10^-6 をsuggestive levelとすることもある.
+
 ### 使われる手法
 基本的にはどれも線形混合モデルをベースとしており, 大きくは変わらない (気がする) が, サンプル数/SNP数の増加に伴い, 計算時間とメモリ使用量が膨大に増えてきたので, それを抑えつつ, 真のシグナルを捉えられるよう微調整が加えられてきたというイメージ. [この論文](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-020-6552-x)のイントロで各手法の (長所) 短所が紹介されている. 量的形質なら`BOLT-LMM`, 2値形質 (疾患かどうか等) なら`SAIGE`が現時点 (2020/6) ではベストという印象を受けた.
 #### Variant-baseモデル
-- `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). 2011年. genome-wide complex trait analysisの略.
+- `GCTA`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(10)00598-7). 2011年. genome-wide complex trait analysisの略. 線形混合モデルを用いた関連解析の他に, 相加的な遺伝的変異の効果により表現型分散をどれほど説明できるか, 遺伝率の計算も行うことができる. Genome-based Restricted Maximum Likelihood (GREML) という.
 - `FaST-LMM`: [元論文](https://www.nature.com/articles/nmeth.1681). 2011年. 混合モデルでは計算に時間がかかりすぎるという問題点をM < Nになるようマーカー自体を減らすというアイデアで実装している.
 - `GRAMMAR-Gamma`: [元論文](https://www.nature.com/articles/ng.2410). 2012年.
 - `GEMMA`: [元論文](https://www.nature.com/articles/ng.2310). 2012年. Genome-wide efficient mixed-model analysisの略.
@@ -35,6 +38,7 @@
 - `GIANT`: [GWASのSummary Statisticsをまとめているデータベース](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files). ここには主にanthropometric (身長やBMIなど体型に関わる) データが置かれており, これを使ったメタ解析もよく行われる. これ以外にも様々なデータベースにGWASのSummary Statisticsデータは置かれている. [この論文](https://www.nature.com/articles/ng.3406)など参照. 例として[PGC (Psychiatric Genomics Consortium)](https://www.med.unc.edu/pgc/download-results/) が挙げられる. [Neale Lab](http://www.nealelab.is/uk-biobank)がUK Biobankのデータをまとめている. 日本人のデータであればRIKENの[JENGER](http://jenger.riken.jp/en/)がまとめているものもある.
 
 ### 関連の解析手法
+- `Genomic control (GC)`: [元論文](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0006-341X.1999.00997.x). population stratification (後述) によってインフレーションを起こした遺伝子型-表現型間の相関を, λ (inflation factor) で補正するというアイデア. λが1.1を超えると, 有意となるSNPsが多すぎる ≒ 集団の構造化が疑われるらしい.
 - `LD score (LDSC)`: [元論文](https://www.nature.com/articles/ng.3211). あるSNPについて, 他の全てのSNPsとのLD (r^2) を合計したものが, そのSNPのLD scoreである. LD scoreを用いることで, ある形質のSNP-baseの遺伝率を計算したり, [独立な形質間の遺伝的な相関を計算する](https://www.nature.com/articles/ng.3406)ことができる. 必要なデータはGWASのSummary StatisticsとLDのデータ ([1KGについて計算したもの](https://data.broadinstitute.org/alkesgroup/LDSCORE/)がよく使われる) だけであり, 簡便に計算することができる. MAFが小さい (<1%) SNPsはLD scoreの分散が大きいため除かれるほか, 効果サイズが非常に大きいものや, LDの範囲が非常に長いものも除かれる. また, LDの計算に用いられたサンプルと, GWASが行われたサンプルが遺伝的に離れているとbiasが生じるので, できる限り近いものを用いる.
   - よく使われるソフトウェア: `LDSC` ([リンク](https://github.com/bulik/ldsc)).
 - `Polygenic score (PGS)`: 特に疾患を対象にする場合はpolygenic risk score (PRS), risk profile scoring, genetic risk scoring, またgenotype score, genetic scoringなどと呼ばれたりもする. 注目している形質に各SNPj (計M個のSNPs) が与える効果サイズwj (通常GWASの結果そのままでなく, PGSの計算に使うSNPsの値だけで標準化?) を線型結合した値として, 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
@@ -48,8 +52,9 @@ PGSの運用においては, まず"Discovery/Base"集団にGWASを行った上�
 MRにおいては, 1) 遺伝的変異はリスク因子と関連し, 2) 遺伝的変異は交絡因子とは独立であり, 3) 遺伝的変異はリスク因子を経てのみ, 調べたい表現型に影響する, という前提が重要であり, これに当てはまらない場合は利用できない. 例えば, 遺伝子が多面効果を持ち, 交絡因子と関連してしまう場合が挙げられる. また, 集団の構造やLDの問題など, 操作する遺伝的変異の選択においても注意が必要.
 
 ### 関連項目
-- 線形混合モデル (LMM: Linear Mixed Model): SNPの効果を固定効果, 性別や年齢 (, 年齢^2), 遺伝的な集団構造 (e.g. PC1–10) を変量効果として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に前述の手法は全てこの改良版. 個体数N, 計M個のSNPsがあった時, 個体の表現型yは, 各SNPxの固定効果β (これを求めるのが目的となる), サンプル間の遺伝的距離 (kinship matrixあるいはgenetic relationship matrix (GRM)と呼ばれる) に基づくpolygenicな変量効果g, エラー項eで表される. <br><br>
+- 線形混合モデル (LMM: Linear Mixed Model): SNPの効果を固定効果, 性別や年齢 (, 年齢^2, 場合によってはBMIも), 遺伝的な集団構造 (e.g. PC1–10) を変量効果として入れて解析を行うスタンダードなモデル. `PLINK`で解析可能. 基本的に前述の手法は全てこの改良版. 個体数N, 計M個のSNPsがあった時, 個体の表現型yは, 各SNPxの固定効果β (これを求めるのが目的となる), サンプル間の遺伝的距離 (kinship matrixあるいはgenetic relationship matrix (GRM)と呼ばれる) に基づくpolygenicな変量効果g, エラー項eで表される. <br><br>
   <img src="https://latex.codecogs.com/gif.latex?\begin{pmatrix}&space;y_{1}&space;\\&space;\cdot&space;\\&space;\cdot&space;\\&space;y_{N}&space;\end{pmatrix}&space;=&space;\begin{pmatrix}&space;x_{11}&space;&&space;\cdot&space;\cdot&space;\cdot&space;&&space;x_{1M}\\&space;\cdot&space;&&space;&&space;\cdot&space;\\&space;\cdot&space;&&space;&&space;\cdot&space;\\&space;x_{N1}&space;&&space;\cdot&space;\cdot&space;\cdot&space;&&space;x_{NM}&space;\end{pmatrix}&space;\begin{pmatrix}&space;\beta_{1}&space;\\&space;\cdot&space;\\&space;\cdot&space;\\&space;\beta_{M}&space;\end{pmatrix}&space;&plus;&space;\begin{pmatrix}&space;g_{1}&space;\\&space;\cdot&space;\\&space;\cdot&space;\\&space;g_{N}&space;\end{pmatrix}&space;&plus;&space;\begin{pmatrix}&space;e_{1}&space;\\&space;\cdot&space;\\&space;\cdot&space;\\&space;e_{N}&space;\end{pmatrix}" title="\begin{pmatrix} y_{1} \\ \cdot \\ \cdot \\ y_{N} \end{pmatrix} = \begin{pmatrix} x_{11} & \cdot \cdot \cdot & x_{1M}\\ \cdot & & \cdot \\ \cdot & & \cdot \\ x_{N1} & \cdot \cdot \cdot & x_{NM} \end{pmatrix} \begin{pmatrix} \beta_{1} \\ \cdot \\ \cdot \\ \beta_{M} \end{pmatrix} + \begin{pmatrix} g_{1} \\ \cdot \\ \cdot \\ g_{N} \end{pmatrix} + \begin{pmatrix} e_{1} \\ \cdot \\ \cdot \\ e_{N} \end{pmatrix}" /><br><br>
+- Population stratification: 集団の構造化という. 同一の研究内で異なる集団由来のサンプルを含めてしまうこと. Hidden (cryptic) relatednessは研究内のサンプルに, 知られていなかった遺伝的な (血縁) 関係があること.
 - Ridge/Lasso (回帰): 過学習を抑えるために正則化項の概念を入れた線形回帰. 過学習を抑えるためには, データセットをtraining setとvalidation setに (何度か) 分け, 結果のrobustnessを評価する方法もしばしば取られる.
 - 正則化 (項): 線形回帰において, 各変数の標準偏回帰係数の大きさ (これが大きいとデータに無理に当てはめていることになる) にペナルティを与えるため損失関数に入れる項.<br>
 <img src="https://latex.codecogs.com/gif.latex?E_{OLS}&space;=&space;\sum&space;_{i=1}^{N}&space;(y_i&space;-&space;\widehat{y})^2" title="\sum _{i=1}^{N} (y_i - \widehat{y})^2" /><br>
