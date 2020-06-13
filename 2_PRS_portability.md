@@ -60,6 +60,10 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 ### Polygenic adaptation, PGSと自然選択の関係
 #### [Pritchard et al. 2010](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
+#### [Berg et al. 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)
+この研究から (？) 集団レベルでのPGSについて以下の定式化がなされた. 計L個の各SNP (の効果アリル) がαの効果サイズを持つ時, 各SNP (の効果アリル) の集団内での頻度pを用いて, その集団mについて平均のgenetic value/effective sizeが求められる. <br>
+<img src="https://latex.codecogs.com/gif.latex?Z_m&space;=&space;2\sum&space;_{l=1}^L&space;\alpha_lp_{ml}" title="Z_m = 2\sum _{l=1}^L \alpha_lp_{ml}" /><br>
+
 #### [Field et al. 2016](https://science.sciencemag.org/content/354/6313/760)
 SDSを開発した論文.
 
