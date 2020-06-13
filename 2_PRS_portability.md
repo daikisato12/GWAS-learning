@@ -72,10 +72,30 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 #### [Field et al. 2016](https://science.sciencemag.org/content/354/6313/760)
 SDSを開発した論文.
 
+#### [Racimo et al. 2018](https://www.genetics.org/content/208/4/1565)
+
+#### [Zeng et al. 2018](https://www.nature.com/articles/s41588-018-0101-4)
+
 #### [Guo et al. 2018](https://www.nature.com/articles/s41467-018-04191-y)
 多くの研究がヒト集団間の遺伝的分化における自然選択の働きを示唆しているが, 自然選択のシグナルが特定の複雑な形質にenrichしているかどうか調べるというのは簡単なことではない. それは, 1) ほとんどの複雑な形質はそれぞれが弱い効果を持つ多数の遺伝子座から成り立っており, 遺伝的な分化のシグナルはそれらの間で薄まり, 完全な選択的一掃を探索する手法では検出できない. 2) 遺伝的分化は環境要因によってマスクされうる からである. 
 
 まず表現型と相関するSNPsが集団間でアリル頻度に (遺伝的浮動から期待されるよりも有意な) 分化を示すかどうかを調べた. 集団間でアリル頻度に有意な分化が見られた形質に関しては, その方向性をPGSの計算/リスクアリルの平均頻度によって調べた. また, あるSNPが自然選択を受けているのであれば, そのSNPのLDスコア (1Mbの範囲にある他のSNPsとのr^2の合計値) もまた集団間で分化を示すはず → これも調べた. 
+
+Fstエンリッチメント解析 (表現型と相関するSNPsが高いFstを示すかどうか; [Zhang et al. 2013](https://www.sciencedirect.com/science/article/pii/S2212066113000173))の結果, 身長, BMI, 統合失調症と相関するSNPsは, MAF/LD scoreのマッチするコントロールのSNP群と比べて平均のFst (EUR/EAS/AFRの3集団間で計算) が高かった. → これらの形質は自然選択を受けている (この時点ではそこまで言えないのでは？ ヨーロッパ集団のGWASの結果をもとに選抜した (**ヨーロッパ集団では**それらの形質と相関している) SNPが, 3集団間で遺伝的浮動よりは有意に分化しているというだけ). ちなみに本研究で使われているWrightのFstは, <img src="https://latex.codecogs.com/gif.latex?\bar{p}" title="\bar{p}" /> を全集団でのアリル頻度, <img src="https://latex.codecogs.com/gif.latex?p_i" title="p_i" />をi番目の集団でのアリル頻度として, 以下の式で与えられる. <br>
+<img src="https://latex.codecogs.com/gif.latex?F_{ST}&space;=&space;\frac{\bar{p}(1-\bar{p})-\sum&space;c_ip_i(1-p_i)}{\bar{p}(1-\bar{p})}&space;=&space;\frac{\bar{p}(1-\bar{p})-\overline{p(1-p)}}{\bar{p}(1-\bar{p})}" title="F_{ST} = \frac{\bar{p}(1-\bar{p})-\sum c_ip_i(1-p_i)}{\bar{p}(1-\bar{p})} = \frac{\bar{p}(1-\bar{p})-\overline{p(1-p)}}{\bar{p}(1-\bar{p})}" /><br>
+
+次に, PGSの計算により遺伝的分化の方向性を調べた. LD clumpingで選抜したSNP群と, 同数のMAF/LD scoreがマッチするSNP群 (さらにそれを10,000セット)とを使い, それぞれPGSを計算するとEUR集団の身長PGSはEAS/AFR集団より高いし, 統合失調症のPGSはAFR集団で高い. これらはいずれもそれまでの先行研究に一致する. ← ここらへん, 上述のように, Discovery sampleがEURなのにTarget sampleの集団間の比較はそもそも成り立つのかという問題がある. そこで, 上のPGSの結果をより直接的に, trait-increasing allelesの頻度 (fTIAs) 比較で確かめる. 各SNPの効果の方向性は集団構造の影響を受けづらいからである. ← これはいいかも. 結果, 身長を高くするアリルはEASに比べてEUR集団で頻度が高い / 統合失調症はEURに比べてAFR集団で頻度が高い / BMIはEURに比べてEASで頻度が高い傾向があった.
+
+_統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR集団で高いとなるのは, これまでの先行研究でも指摘されているし, 自分の注目しているSNPでもそう. 実際の表現型としてもそういう報告がある ([Schwartz & Blankenship 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4274585/); [Bresnahan et al. 2007](https://academic.oup.com/ije/article/36/4/751/665657)) が本当だろうか？ 身長の話同様, 何か交絡要因を考慮できていない等の技術的な問題があるような気がしてしまう. また, 繰り返し指摘されているように, Socioeconomicな要因は確かに大きい. アフリカ集団を対象にした100万人規模のGWASを待ちたい._
+
+問題点が5つ, 
+1. Fst enrichment testは高度にpolygenicな形質に対しては検出力が下がる.　(図3でコントロールのSNPsでも集団間で頻度の差を示していることから分かるように) コントロール群のSNPsには, 表現型に影響するcausal variantsとLDにあるものが偶然含まれる可能性があるから.
+2. 何度も指摘されているように, GWASのサンプルがEUR集団であるということ. EURと非EUR集団で遺伝的な異質性があると, 非EUR集団でのPGSの計算はバイアスを受けることになる. ← しかし, fTIAの計算でも概ねPGSの傾向と一致していたので, 大きな問題は無さそうとのこと. 
+3. 形質と相関する全てのSNPsについてFst (あるいはLD score) を計算しているので, 今回見られた集団間の遺伝的分化が, 異なる遺伝子座に働く自然選択によるものなのか, 同一の遺伝子座だが異なるアリルに働く自然選択によるのか, あるいは同一のアリルだが, 自然選択の程度が集団間で異なるのか, を区別できない. ← ここのロジックはまだちょっと理解できていない. 
+4. 異なるアリルが集団間で選択を受けているように思えるが, background selectionの可能性 (遺伝的分化が強いSNPsは, 負の選択を受けるcausal variantsとLDにあるのでは) も捨てきれない. 実際`SLiM`を使ったforward simulationでは, background selectionが遺伝的多様性を減少させ, 負の選択を受ける変異とLDにある変異について, 集団間の遺伝的分化を高めることが示された. 
+5. FstやLD scoreにより自然選択を示したのが本研究だが, これらは**いつ**選択が働いたのか, あるいは他の種類の自然選択が生じているのかについては分からない. これについては最近開発された[Admixture graphを用いた手法 (Racimo et al. 2018)](https://www.genetics.org/content/208/4/1565)を参照.
+
+#### [Schoech et al. 2019](https://www.nature.com/articles/s41467-019-08424-6)
 
 #### [Höllinger et al. 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1008035)
 
