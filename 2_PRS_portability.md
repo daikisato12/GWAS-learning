@@ -5,27 +5,27 @@
 ### Discovery / Target sampleの遺伝的相違について
 PGSの計算に用いるSummary Statistics (要は各SNPの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文が参考になる.
 
-#### [Scutari et al. 2016](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006288)
+#### [Scutari et al. 2016 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006288)
 Training (discovery) sampleとTarget sampleの遺伝的距離 (Fstあるいは平均血縁度) が遠いほど, 予測能力が下がることを示した. この予測能力の低下はアリル頻度とLDの違いに起因する.
 
-#### [Martin et al. 2017](https://www.cell.com/ajhg/fulltext/S0002-9297(17)30107-6)
+#### [Martin et al. 2017 _AJHG_](https://www.cell.com/ajhg/fulltext/S0002-9297(17)30107-6)
 例えば身長はヨーロッパ集団からの遺伝的な距離が離れるにつれてPGSが低くなる. アフリカ集団は実際の表現型としては身長は低くないが, PGSで計算すると低くなってしまう. コアレセントシミュレーションを用いてゲノムデータを作成し, GWASを行う → PGSの計算 を再現してみると, 予想通り, 同じ集団をDiscovery/Target sampleに用いた時に, 実際の表現型とPGSの相関が最も強くなった.
 
 *続報として, 上記研究では集団動態のシミュレーションに誤りがあったとする[論文](https://www.biorxiv.org/content/10.1101/2020.06.04.131284v1)が最近出た. 非アフリカ集団がアフリカ集団から生じたという仕様になっておらず, 集団間の遺伝的分化が大きく推定されていたという. 上記の結論に変わりはないが, Discovery sampleと異なる集団の遺伝子型を使って計算するPGSの正確さに, 報告されていたほどの大きな減少はないとのこと.
 
-#### [Grinde et al. 2018](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.22166)
+#### [Grinde et al. 2018 _Genet. Epidemiol_](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.22166)
 European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集団に用いてPGSを計算した結果, 概ね予測性能は良かったが, 血圧に関してはそうではなかった.
 
-#### [Curtis 2018](https://journals.lww.com/psychgenetics/Fulltext/2018/10000/Polygenic_risk_score_for_schizophrenia_is_more.2.aspx)
+#### [Curtis 2018 _Psychiat. Genet._](https://journals.lww.com/psychgenetics/Fulltext/2018/10000/Polygenic_risk_score_for_schizophrenia_is_more.2.aspx)
 ヨーロッパ集団を用いた統合失調症のGWASから計算されたPRSを祖先の異なる集団に用いると, 統合失調症という表現型そのものよりも祖先の集団による差が大きい.
 
-#### [Haworth et al. 2019](https://www.nature.com/articles/s41467-018-08219-1)
+#### [Haworth et al. 2019 _Nat. Commun._](https://www.nature.com/articles/s41467-018-08219-1)
 比較的遺伝的に均一で信頼性が高いと思われるUKBのデータにも潜在的な集団構造があるという.
 
-#### [Martin et al. 2019](https://www.nature.com/articles/s41588-019-0379-x)
+#### [Martin et al. 2019 _Nat. Genet._](https://www.nature.com/articles/s41588-019-0379-x)
 もっとヨーロッパ集団以外のデータを増やさないとね, というコメンタリー論文.
 
-#### [Duncan et al. 2019](https://www.nature.com/articles/s41467-019-11112-0)
+#### [Duncan et al. 2019 _Nat. Commun_](https://www.nature.com/articles/s41467-019-11112-0)
 (図1) 2008-2017年に出版された733のPolygenic scoreを使った研究を調べた結果, 67%がヨーロッパに祖先を持つ集団のみを対象, 19%がアジア (ほぼ東アジア; 中国や日本) 集団のみを対象, 3.8%のみがアフリカ系やヒスパニック, 現地人 (ネイティブアメリカンや中東)) 集団だった.
 
 (図2) PGSのEffect size (実際の表現型とPGSの相関 (説明可能性)？) を祖先の異なる複数の集団で出している先行研究のGWASデータをForest plotにしてまとめているという図.　図1と同様, これらの研究のDiscovery sampleの大半はヨーロッパ祖先集団が占めているので, その影響が大きいと思われる. ヨーロッパ集団での効果サイズと他集団での効果サイズの比を取ると, 他集団では低い → ヨーロッパ祖先集団から計算されたPGSを他集団の表現型予測に使うと予測性能は大幅に落ちることが分かった. 特にアフリカ集団で差が大きい, これはヨーロッパ集団との遺伝的距離が他の集団に比べて大きいことに由来していると考えられる. この図, 説明があまりに少ないし, 元論文の引用もちゃんとされていないので非常に分かりづらい. また元論文でPGSの計算に使われているSNPsの基準も分かりづらい (P < 5.0×10^-8？).
@@ -52,14 +52,14 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 ### GWAS時点で遺伝的集団構造が十分に補正されていないという問題点
 GIANTやR15-sibsとUKBのデータセットをそれぞれ使ったPRSの傾向が一致しないことがあり, GWAS時点でデータセット内部の集団構造が十分に補正されていないという問題点が指摘されている. 
 
-#### [Uricchio et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
-GIANTデータセットの集団構造の補正が不十分であった可能性を示す.
+#### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
+GIANTデータセットの集団構造の補正が不十分であった可能性を示す. ひとの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量するようやく統計量を提案する.
 
-#### [Berg et al. 2019](https://elifesciences.org/articles/39725)
-ヨーロッパ集団で身長に対してpolygenic adaptationが起きていると言われているが, それまでGIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した結果, シグナルは消えたという. GWASの時点の集団構造の補正がPGSの計算に不十分であった可能性を示す. 
+#### [Berg et al. 2019 _eLife_](https://elifesciences.org/articles/39725)
+ヨーロッパ集団で身長に対してpolygenic adaptationが起きていると言われているが, それまでGIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した結果, シグナルは消えたという. GWASの時点の集団構造の補正がPGSの計算に不十分であった可能性を示す. ほぼ下記のSohail et al. 2019と同じ内容. 論文を見ると受け取った日付, アクセプトされた日付, 出版された日付, Editorまで全て同一だった. 元々一つの論文だったのか？
 
-#### [Sohail et al. 2019](https://elifesciences.org/articles/39702)
-GIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した. GIANTは79の別々のGWAS結果をメタ解析したもの (トータルのサンプル数: 253,288) であり, それぞれのサンプル数は小さく, また集団構造の補正が十分でないものがある (集団構造を適切に検出し補正できるかどうかはサンプルサイズにも依存する) . それに対し, UKBはほぼ全員がイギリス人集団に属する血縁関係にない個体 (サンプル数: 336,474) であり, こちらの方が集団構造のバイアスも少なく正確なPGSの推定が行うことができると期待される. 二つの研究で検出されたSNPはかなり一致していた (遺伝的相関: 0.94)が, 特にgenome-wide significanceに到っていなかったSNPsを使うと, PGSの結果には大きな違いが観察され, 集団構造によるバイアスを受けやすかった. 現代人の1KGに加え, 古代人ゲノムも使って, 先行研究との結果の比較, 評価をしている.
+#### [Sohail et al. 2019 _eLife_](https://elifesciences.org/articles/39702)
+GIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した. GIANTは79の別々のGWAS結果をメタ解析したもの (トータルのサンプル数: 253,288) であり, それぞれのサンプル数は小さく, また集団構造の補正が十分でないものがある (集団構造を適切に検出し補正できるかどうかはサンプルサイズにも依存する) . それに対し, UKBはほぼ全員がイギリス人集団に属する血縁関係にない個体 (サンプル数: 336,474) であり, こちらの方が集団構造のバイアスも少なく正確なPGSの推定が行うことができると期待される. 二つの研究で検出されたSNPはかなり一致していた (遺伝的相関: 0.94)が, 特にgenome-wide significanceに到っていなかったSNPsを使うと, PGSの結果には大きな違いが観察され, 集団構造によるバイアスを受けやすかった. 現代人の1KGに加え, 古代人ゲノムも使って, 先行研究との結果の比較, 評価をしている. 著者にIain MathiesonやDavid Reichが入っているからか.
 
 SDSの計算もしている (というか既に元論文でUK10Kに対して計算されている値を使っている). ある形質について, trait-increasing alleleについてSDSを計算 (例えば全てTIAを分子にSDSを計算) したものをtSDSと呼ぶ. アリル頻度1%ごとにbinにして標準化し, 6番染色体上のMHC領域は除いた後, tSDSとGWASのP値との相関 (スピアマンの相関係数) を見ている. tSDSの計算においても, GIANT (今回はそのうちUK10K) のデータでは, UK集団の身長を高くするアリルについて計算したtSDSとGWASでのP値の間に高い相関があったが, UKBのデータではそうはならなかった. ここではSNPはP値で選抜していないので, 上記同様P値の高い (sub-significantな) ものが集団間のPGSの違いだけでなく, 同一集団における自然選択の推定においても大きな影響を持つことを示している.
 
@@ -70,28 +70,34 @@ tSDSはコアレセントベースの手法のため, アリル頻度を変え�
 _結局, 集団間で頻度に差が大きいSNPsは, 自然選択が働いている可能性もあるが, 集団間の遺伝的な分化をそのまま反映している (遺伝的浮動による) 可能性もある. 逆に言えば, どの集団でも頻度があまり変わらない, 平衡選択が働いているようなSNPsを検出するという方向性の話であれば, こうした問題はあまり考えなくてもいいのかもしれない._
 
 ### Polygenic adaptation, PGSと自然選択の関係
-#### [Pritchard et al. 2010](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
+#### [Pritchard et al. 2010 _Curr. Biol._](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
-#### [Kemper et al. 2014](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
+#### [Kemper et al. 2014 _BMC Genomics_](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
 自然選択の検出により少数の表現型に寄与する遺伝子座は特定できるが, 全体としては, 形質に影響する遺伝子座と自然選択の間に相関は見つけられない. 複雑な形質は古典的な自然選択の痕跡を残さないため, そうした遺伝子座を自然選択の検出により見つけることは難しい.
 
-#### [Berg & Coop 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)
+#### [Berg & Coop 2014 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)
 集団レベルでのPGS (この研究ではmean genetic valueと呼ばれる) は以下の式で表される (Fisher 1930). 計L個の各SNP (の効果アリル) がαの効果サイズを持つ時, 各SNP (の効果アリル) の集団内での頻度pを用いて, その集団mについてmean genetic value/effective sizeが求められる. <br><br>
 <img src="https://latex.codecogs.com/gif.latex?Z_m&space;=&space;2\sum&space;_{l=1}^L&space;\alpha_lp_{ml}" title="Z_m = 2\sum _{l=1}^L \alpha_lp_{ml}" /><br>
 
 本研究では, genetic valueの同時 (確率) 分布を求める集団遺伝学的なモデリングにより, 集団構造の効果を取り除くことで, 遺伝的浮動の効果ではなく自然選択がどのように遺伝子座に働くかを示している. 有意に選択が働いている遺伝子座を特定するだけでなく, 選択が働いている集団を特定することも可能.
 
-#### [Field et al. 2016](https://science.sciencemag.org/content/354/6313/760)
+#### [Field et al. 2016 _Science_](https://science.sciencemag.org/content/354/6313/760)
 SDSを開発した論文. 最近の選択によりアリル頻度が変化した時, その二つのアリルそれぞれのコアレセント時間の分布に違いが生まれるだろうというアイデア. 一気に広がったハプロタイプ (tip lengthが短い) は周辺のシングルトンの密度が低いのに対し, 選択を受けていない (tip lengthが相対的に長い) ハプロタイプは, 周辺に多くのシングルトンがあるため, 最近傍のシングルトンまでの距離が短い. この最近傍シングルトンまでの距離から, tip lengthを最尤推定する. 標準化前のSDS*は, 各個体のコアレセントツリーから, 祖先型/派生型アリルを持つ個体の平均tip length (<img src="https://latex.codecogs.com/gif.latex?\hat{t}_A" title="\hat{t}_A" />および<img src="https://latex.codecogs.com/gif.latex?\hat{t}_D" title="\hat{t}_D" />; 各アリルについて最尤推定される) により, 以下の式で定義される. [コードのリンクはこちら](https://github.com/yairf/SDS). <br><br>
 <img src="https://latex.codecogs.com/gif.latex?SDS*&space;=&space;log(\frac{\hat{t}_A}{\hat{t}_D})" title="SDS* = log(\frac{\hat{t}_A}{\hat{t}_D})" />
 
-#### [Novembre & Barton 2018](https://www.genetics.org/content/208/4/1351)
+#### [Jain & Stephan 2017 _Genetics_](https://www.genetics.org/content/206/1/389.long)
 
-#### [Racimo et al. 2018](https://www.genetics.org/content/208/4/1565)
+#### [Gazal et al. 2017 _Nat. Genet._](https://www.nature.com/articles/ng.3954)
 
-#### [Zeng et al. 2018](https://www.nature.com/articles/s41588-018-0101-4)
+#### [Sanjak et al. 2018 _PNAS_](https://www.pnas.org/content/115/1/151)
 
-#### [Guo et al. 2018](https://www.nature.com/articles/s41467-018-04191-y)
+#### [Novembre & Barton 2018 _Genetics_](https://www.genetics.org/content/208/4/1351)
+
+#### [Racimo et al. 2018 _Genetics_](https://www.genetics.org/content/208/4/1565)
+
+#### [Zeng et al. 2018 _Nat. Genet._](https://www.nature.com/articles/s41588-018-0101-4)
+
+#### [Guo et al. 2018 _Nat. Commun._](https://www.nature.com/articles/s41467-018-04191-y)
 多くの研究がヒト集団間の遺伝的分化における自然選択の働きを示唆しているが, 自然選択のシグナルが特定の複雑な形質にenrichしているかどうか調べるというのは簡単なことではない. それは, 1) ほとんどの複雑な形質はそれぞれが弱い効果を持つ多数の遺伝子座から成り立っており, 遺伝的な分化のシグナルはそれらの間で薄まり, 完全な選択的一掃を探索する手法では検出できない. 2) 遺伝的分化は環境要因によってマスクされうる からである. 
 
 まず表現型と相関するSNPsが集団間でアリル頻度に (遺伝的浮動から期待されるよりも有意な) 分化を示すかどうかを調べた. 集団間でアリル頻度に有意な分化が見られた形質に関しては, その方向性をPGSの計算/リスクアリルの平均頻度によって調べた. また, あるSNPが自然選択を受けているのであれば, そのSNPのLDスコア (1Mbの範囲にある他のSNPsとのr^2の合計値) もまた集団間で分化を示すはず → これも調べた. 
@@ -110,11 +116,11 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 4. 異なるアリルが集団間で選択を受けているように思えるが, background selectionの可能性 (遺伝的分化が強いSNPsは, 負の選択を受けるcausal variantsとLDにあるのでは) も捨てきれない. 実際`SLiM`を使ったforward simulationでは, background selectionが遺伝的多様性を減少させ, 負の選択を受ける変異とLDにある変異について, 集団間の遺伝的分化を高めることが示された. 
 5. FstやLD scoreにより自然選択を示したのが本研究だが, これらは**いつ**選択が働いたのか, あるいは他の種類の自然選択が生じているのかについては分からない. これについては最近開発された[Admixture graphを用いた手法 (Racimo et al. 2018)](https://www.genetics.org/content/208/4/1565)を参照.
 
-#### [Schoech et al. 2019](https://www.nature.com/articles/s41467-019-08424-6)
+#### [Schoech et al. 2019 _Nat. Commun._](https://www.nature.com/articles/s41467-019-08424-6)
 
-#### [Höllinger et al. 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1008035)
+#### [Höllinger et al. 2019 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1008035)
 
-#### [Chen et al. 2020](https://www.cell.com/ajhg/pdfExtended/S0002-9297(20)30161-0)
+#### [Chen et al. 2020 _AJHG_](https://www.cell.com/ajhg/pdfExtended/S0002-9297(20)30161-0)
 上記の Berg et al. 2019; Uricchio et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
 
 
