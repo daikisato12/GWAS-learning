@@ -52,9 +52,6 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 ### GWAS時点で遺伝的集団構造が十分に補正されていないという問題点
 GIANTやR15-sibsとUKBのデータセットをそれぞれ使ったPRSの傾向が一致しないことがあり, GWAS時点でデータセット内部の集団構造が十分に補正されていないという問題点が指摘されている. 
 
-#### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
-GIANTデータセットの集団構造の補正が不十分であった可能性を示す. ひとの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量するようやく統計量を提案する.
-
 #### [Berg et al. 2019 _eLife_](https://elifesciences.org/articles/39725)
 ヨーロッパ集団で身長に対してpolygenic adaptationが起きていると言われているが, それまでGIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した結果, シグナルは消えたという. GWASの時点の集団構造の補正がPGSの計算に不十分であった可能性を示す. ほぼ下記のSohail et al. 2019と同じ内容. 論文を見ると受け取った日付, アクセプトされた日付, 出版された日付, Editorまで全て同一だった. 元々一つの論文だったのか？
 
@@ -116,12 +113,15 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 4. 異なるアリルが集団間で選択を受けているように思えるが, background selectionの可能性 (遺伝的分化が強いSNPsは, 負の選択を受けるcausal variantsとLDにあるのでは) も捨てきれない. 実際`SLiM`を使ったforward simulationでは, background selectionが遺伝的多様性を減少させ, 負の選択を受ける変異とLDにある変異について, 集団間の遺伝的分化を高めることが示された. 
 5. FstやLD scoreにより自然選択を示したのが本研究だが, これらは**いつ**選択が働いたのか, あるいは他の種類の自然選択が生じているのかについては分からない. これについては最近開発された[Admixture graphを用いた手法 (Racimo et al. 2018)](https://www.genetics.org/content/208/4/1565)を参照.
 
+#### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
+GIANTデータセットの集団構造の補正が不十分であった可能性を示す. ヒトの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量するようやく統計量を提案する.
+
 #### [Schoech et al. 2019 _Nat. Commun._](https://www.nature.com/articles/s41467-019-08424-6)
 
 #### [Höllinger et al. 2019 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1008035)
 
 #### [Chen et al. 2020 _AJHG_](https://www.cell.com/ajhg/pdfExtended/S0002-9297(20)30161-0)
-上記の Berg et al. 2019; Uricchio et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
+上記の Berg et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
 
 
 ### PGSの計算について
