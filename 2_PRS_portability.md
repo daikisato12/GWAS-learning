@@ -122,3 +122,12 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 - `LDpred`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), [リンク](https://github.com/bvilhjal/ldpred). GWASで出力された各SNPの効果サイズを, その集団のLD情報を用いて補正するというもの. 特にサンプルサイズが大きいと, LD clumping → P値の閾値設定 よりも正確らしい.
 - `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info). 複数のP値/LDの閾値で計算し, 最も説明力の高い条件探索を行うことができる. また複数形質も一度に計算してくれる.
 - 予測性能をどう表現するか: 実際の表現型とPGSの間の決定係数 (R^2) がよく使われる. ただ[色々な補正手法が開発されている](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.21614).
+
+### 関連項目
+- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われる模様. ゲノム全体を (あるいはLDを考慮して) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
+<img src="https://latex.codecogs.com/gif.latex?\bar{\rho^b}&space;=&space;\frac{1}{b}&space;\sum&space;_{i=1}^b&space;\hat{\rho}^b_{(-i)}" title="\bar{\rho^b} = \frac{1}{b} \sum _{i=1}^b \hat{\rho}^b_{(-i)}" /><br>
+で平均の相関係数が求められ, さらに,<br><br>
+<img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2&space;=&space;\frac{b-1}{b}&space;\sum_{i=1}^b&space;(\hat{\rho}^b_{(-i)}&space;-&space;\bar{\rho^b})" title="\hat{\sigma}^2 = \frac{b-1}{b} \sum_{i=1}^b (\hat{\rho}^b_{(-i)} - \bar{\rho^b})" /><br>
+からスピアマンの相関係数の点推定値の標準誤差が求められる. ここから, <img src="https://latex.codecogs.com/gif.latex?\hat{\rho}" title="\hat{\rho}" />は標準偏差<img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}" title="\hat{\sigma}" />の正規分布に従う, すなわち<br><br>
+<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}&space;\sim&space;N(0,&space;\hat{\sigma})" title="\hat{\rho} \sim N(0, \hat{\sigma})" /><br>
+を仮定して, <img src="https://latex.codecogs.com/gif.latex?H_0:\rho&space;=&space;0" title="\rho = 0" /> という帰無仮説を検定してP値を求める.
