@@ -67,6 +67,7 @@ tSDSはコアレセントベースの手法のため, アリル頻度を変え�
 _結局, 集団間で頻度に差が大きいSNPsは, 自然選択が働いている可能性もあるが, 集団間の遺伝的な分化をそのまま反映している (遺伝的浮動による) 可能性もある. 逆に言えば, どの集団でも頻度があまり変わらない, 平衡選択が働いているようなSNPsを検出するという方向性の話であれば, こうした問題はあまり考えなくてもいいのかもしれない._
 
 ### Polygenic adaptation, PGSと自然選択の関係
+古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, 形質全体に弱く働く選択を検出することはできない. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている.
 #### [Pritchard et al. 2010 _Curr. Biol._](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
 #### [Kemper et al. 2014 _BMC Genomics_](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
