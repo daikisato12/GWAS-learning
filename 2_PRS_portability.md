@@ -2,8 +2,8 @@
 ある形質についてのGWASの結果から得られた各SNPsの効果サイズを, 独立なサンプルの各SNPのアリル数に掛け合わせたスコア (`1_OveralPicture.md`参照). 個体の形質に対する遺伝的な傾向/リスクを評価することができる. 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
 <img src="https://latex.codecogs.com/gif.latex?PGS_i&space;=&space;\sum&space;_{j=1}&space;^M&space;a_{ij}w_j" title="PGS_i = \sum _{j=1} ^M a_{ij}w_j" />
 
-### Discovery / Target sampleの相違について
-PGSの計算に用いるSummary Statistics (要は各SNPsの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文が参考になる.
+### Discovery / Target sampleの遺伝的相違について
+PGSの計算に用いるSummary Statistics (要は各SNPの効果サイズ) を得たGWASのサンプル (discovery sample) と, それを掛け合わせ, 表現型を予測したいサンプル (target sample) は独立であることが求められる ([Wray et al. 2013](https://www.nature.com/articles/nrg3457)). この時, 両者に遺伝的な隔たりが大きいと正確な予測ができないことが知られている. 以下の論文が参考になる.
 
 #### [Scutari et al. 2016](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1006288)
 Training (discovery) sampleとTarget sampleの遺伝的距離 (Fstあるいは平均血縁度) が遠いほど, 予測能力が下がることを示した. この予測能力の低下はアリル頻度とLDの違いに起因する.
@@ -18,6 +18,9 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 
 #### [Curtis 2018](https://journals.lww.com/psychgenetics/Fulltext/2018/10000/Polygenic_risk_score_for_schizophrenia_is_more.2.aspx)
 ヨーロッパ集団を用いた統合失調症のGWASから計算されたPRSを祖先の異なる集団に用いると, 統合失調症という表現型そのものよりも祖先の集団による差が大きい.
+
+#### [Haworth et al. 2019](https://www.nature.com/articles/s41467-018-08219-1)
+比較的遺伝的に均一で信頼性が高いと思われるUKBのデータにも潜在的な集団構造があるという.
 
 #### [Martin et al. 2019](https://www.nature.com/articles/s41588-019-0379-x)
 もっとヨーロッパ集団以外のデータを増やさないとね, というコメンタリー論文.
@@ -49,13 +52,22 @@ European ancestry (EA) の集団で行われたGWAS結果を, Hispanic/Latino集
 ### GWAS時点で遺伝的集団構造が十分に補正されていないという問題点
 GIANTやR15-sibsとUKBのデータセットをそれぞれ使ったPRSの傾向が一致しないことがあり, GWAS時点でデータセット内部の集団構造が十分に補正されていないという問題点が指摘されている. 
 
-#### [Sohail et al. 2019](https://elifesciences.org/articles/39702)
-
 #### [Uricchio et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
 GIANTデータセットの集団構造の補正が不十分であった可能性を示す.
 
 #### [Berg et al. 2019](https://elifesciences.org/articles/39725)
 ヨーロッパ集団で身長に対してpolygenic adaptationが起きていると言われているが, それまでGIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した結果, シグナルは消えたという. GWASの時点の集団構造の補正がPGSの計算に不十分であった可能性を示す. 
+
+#### [Sohail et al. 2019](https://elifesciences.org/articles/39702)
+GIANTのデータを使って計算されてきたPGSをUKBのデータ (こちらの方が集団構造が薄い) を使って再評価した. GIANTは79の別々のGWAS結果をメタ解析したもの (トータルのサンプル数: 253,288) であり, それぞれのサンプル数は小さく, また集団構造の補正が十分でないものがある (集団構造を適切に検出し補正できるかどうかはサンプルサイズにも依存する) . それに対し, UKBはほぼ全員がイギリス人集団に属する血縁関係にない個体 (サンプル数: 336,474) であり, こちらの方が集団構造のバイアスも少なく正確なPGSの推定が行うことができると期待される. 二つの研究で検出されたSNPはかなり一致していた (遺伝的相関: 0.94)が, 特にgenome-wide significanceに到っていなかったSNPsを使うと, PGSの結果には大きな違いが観察され, 集団構造によるバイアスを受けやすかった. 現代人の1KGに加え, 古代人ゲノムも使って, 先行研究との結果の比較, 評価をしている.
+
+SDSの計算もしている. ある形質について, trait-increasing alleleについてSDSを計算したものをtSDSと呼ぶ. tSDSの計算においても, GIANT (今回はそのうちUK10K) のデータでは, UK集団の身長を高くするアリルについて計算したtSDSと, GWASでのP値の間に高い相関があったが, UKBのデータではそうはならなかった. ここではSNPはP値で選抜していないので, 上記同様P値の高い (sub-significantな) ものが集団間のPGSの違いだけでなく, 同一集団における自然選択の推定においても大きな影響を持つことを示している.
+
+(図2) GIANTでは, 各SNPの効果サイズ (β) およびSDSとPC負荷量との間に強い相関が示されている. → GIANTでは集団構造が各SNPの効果サイズや自然選択の痕跡に反映されてしまっている. また, GIANTでは, GBR-TSI集団間で頻度に差が大きいSNPsほど, 効果サイズが大きい (GBRで頻度が高いパターンほど, 身長を高くする効果が大きい). これは家系ベースの[Robinson et al. 2015](https://www.nature.com/articles/ng.3401)のオリジナルデータ (NG2015 sibs) でも同じだったが, UKBのデータをsiblingデータに限定して行うと, そのような傾向は見られなかった (後に上述のBerg et al. 2019で改訂版のNG2015 sibsを使うと, PGSでもtSDSでもpolygenic adaptationのシグナルは消えたと言う). この解析は集団構造の交絡を捉える上で非常にロバストとも言える.
+
+tSDSはコアレセントベースの手法のため, アリル頻度を変えるようなある種の集団構造に対してはロバストと言える. しかし, 北ヨーロッパ集団は南ヨーロッパ集団に比べて遺伝的多様性が低く, これがSDSの低下を起こしているという ([Sohail et al. 2017](https://science.sciencemag.org/content/356/6337/539)). 結果, TSIよりGBRで頻度の高いアリルでは, (シングルトンが少なくなることに対応して) SDSが高くなりやすい (図2d). GIANTを用いた解析では, 身長を高くするアリルの周辺ではSDSが高く, 集団構造が十分に補正されていないため, それらのアリルは北ヨーロッパ (GBR) 集団で頻度が高くなりやすい. 形質との相関が有意でないSNPsについてのtSDSのシグナルは, 単純に集団構造によって引き起こされている可能性がある (図3).
+
+_結局, 集団間で頻度に差が大きいSNPsは, 自然選択が働いている可能性もあるが, 集団間の遺伝的な分化をそのまま反映している (遺伝的浮動による) 可能性もある. 逆に言えば, どの集団でも頻度があまり変わらない, 平衡選択が働いているようなSNPsを検出するという方向性の話であれば, こうした問題はあまり考えなくてもいいのかもしれない._
 
 ### Polygenic adaptation, PGSと自然選択の関係
 #### [Pritchard et al. 2010](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
@@ -72,6 +84,8 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 #### [Field et al. 2016](https://science.sciencemag.org/content/354/6313/760)
 SDSを開発した論文.
 
+#### [Novembre & Barton 2018](https://www.genetics.org/content/208/4/1351)
+
 #### [Racimo et al. 2018](https://www.genetics.org/content/208/4/1565)
 
 #### [Zeng et al. 2018](https://www.nature.com/articles/s41588-018-0101-4)
@@ -81,15 +95,15 @@ SDSを開発した論文.
 
 まず表現型と相関するSNPsが集団間でアリル頻度に (遺伝的浮動から期待されるよりも有意な) 分化を示すかどうかを調べた. 集団間でアリル頻度に有意な分化が見られた形質に関しては, その方向性をPGSの計算/リスクアリルの平均頻度によって調べた. また, あるSNPが自然選択を受けているのであれば, そのSNPのLDスコア (1Mbの範囲にある他のSNPsとのr^2の合計値) もまた集団間で分化を示すはず → これも調べた. 
 
-Fstエンリッチメント解析 (表現型と相関するSNPsが高いFstを示すかどうか; [Zhang et al. 2013](https://www.sciencedirect.com/science/article/pii/S2212066113000173))の結果, 身長, BMI, 統合失調症と相関するSNPsは, MAF/LD scoreのマッチするコントロールのSNP群と比べて平均のFst (EUR/EAS/AFRの3集団間で計算) が高かった. → これらの形質は自然選択を受けている (この時点ではそこまで言えないのでは？ ヨーロッパ集団のGWASの結果をもとに選抜した (**ヨーロッパ集団では**それらの形質と相関している) SNPが, 3集団間で遺伝的浮動よりは有意に分化しているというだけ). ちなみに本研究で使われているWrightのFstは, <img src="https://latex.codecogs.com/gif.latex?\bar{p}" title="\bar{p}" /> を全集団でのアリル頻度, <img src="https://latex.codecogs.com/gif.latex?p_i" title="p_i" />をi番目の集団でのアリル頻度として, 以下の式で与えられる. <br>
+Fstエンリッチメント解析 (表現型と相関するSNPsが高いFstを示すかどうか; [Zhang et al. 2013](https://www.sciencedirect.com/science/article/pii/S2212066113000173))の結果, 身長, BMI, 統合失調症と相関するSNPsは, MAF/LD scoreのマッチするコントロールのSNP群と比べて平均のFst (EUR/EAS/AFRの3集団間で計算) が高かった. → これらの形質は自然選択を受けている (この時点ではそこまで言えないのでは？ ヨーロッパ集団のGWASの結果をもとに選抜した (**ヨーロッパ集団では**それらの形質と相関している) SNPsが, 3集団間で遺伝的浮動よりは有意に分化しているというだけ). ちなみに本研究で使われているWrightのFstは, <img src="https://latex.codecogs.com/gif.latex?\bar{p}" title="\bar{p}" /> を全集団でのアリル頻度, <img src="https://latex.codecogs.com/gif.latex?p_i" title="p_i" />をi番目の集団でのアリル頻度として, 以下の式で与えられる. <br><br>
 <img src="https://latex.codecogs.com/gif.latex?F_{ST}&space;=&space;\frac{\bar{p}(1-\bar{p})-\sum&space;c_ip_i(1-p_i)}{\bar{p}(1-\bar{p})}&space;=&space;\frac{\bar{p}(1-\bar{p})-\overline{p(1-p)}}{\bar{p}(1-\bar{p})}" title="F_{ST} = \frac{\bar{p}(1-\bar{p})-\sum c_ip_i(1-p_i)}{\bar{p}(1-\bar{p})} = \frac{\bar{p}(1-\bar{p})-\overline{p(1-p)}}{\bar{p}(1-\bar{p})}" /><br>
 
-次に, PGSの計算により遺伝的分化の方向性を調べた. LD clumpingで選抜したSNP群と, 同数のMAF/LD scoreがマッチするSNP群 (さらにそれを10,000セット)とを使い, それぞれPGSを計算するとEUR集団の身長PGSはEAS/AFR集団より高いし, 統合失調症のPGSはAFR集団で高い. これらはいずれもそれまでの先行研究に一致する. ← ここらへん, 上述のように, Discovery sampleがEURなのにTarget sampleの集団間の比較はそもそも成り立つのかという問題がある. そこで, 上のPGSの結果をより直接的に, trait-increasing allelesの頻度 (fTIAs) 比較で確かめる. 各SNPの効果の方向性は集団構造の影響を受けづらいからである. ← これはいいかも. 結果, 身長を高くするアリルはEASに比べてEUR集団で頻度が高い / 統合失調症はEURに比べてAFR集団で頻度が高い / BMIはEURに比べてEASで頻度が高い傾向があった.
+次に, PGSの計算により遺伝的分化の方向性を調べた. LD clumpingで選抜したSNP群と, 同数のMAF/LD scoreがマッチするSNP群 (さらにそれを10,000セット)とを使い, それぞれPGSを計算するとEUR集団の身長PGSはEAS/AFR集団より高いし, 統合失調症のPGSはAFR集団で高い. これらはいずれもそれまでの先行研究に一致する. ただ上述のように, discovery sampleがEURなのにtarget sampleの異なる集団間の比較はそもそも成り立つのかという問題がある. そこで, 上のPGSの結果をより直接的に, trait-increasing allelesの頻度 (fTIAs) 比較で確かめる. 各SNPの効果の方向性は集団構造の影響を受けづらいからである. ← これはいいかも. 結果, 身長を高くするアリルはEASに比べてEUR集団で頻度が高い / 統合失調症はEURに比べてAFR集団で頻度が高い / BMIはEURに比べてEASで頻度が高い傾向があった.
 
 _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR集団で高いとなるのは, これまでの先行研究でも指摘されているし, 自分の注目しているSNPでもそう. 実際の表現型としてもそういう報告がある ([Schwartz & Blankenship 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4274585/); [Bresnahan et al. 2007](https://academic.oup.com/ije/article/36/4/751/665657)) が本当だろうか？ 身長の話同様, 何か交絡要因を考慮できていない等の技術的な問題があるような気がしてしまう. また, 繰り返し指摘されているように, Socioeconomicな要因は確かに大きい. アフリカ集団を対象にした100万人規模のGWASを待ちたい._
 
 問題点が5つ, 
-1. Fst enrichment testは高度にpolygenicな形質に対しては検出力が下がる.　(図3でコントロールのSNPsでも集団間で頻度の差を示していることから分かるように) コントロール群のSNPsには, 表現型に影響するcausal variantsとLDにあるものが偶然含まれる可能性があるから.
+1. Fst enrichment testは高度にpolygenicな形質に対しては検出力が下がる.　(図3でコントロールのSNPsでも期待値の0からずれている (集団間で頻度の差を示している) ことから分かるように) コントロール群のSNPsには, 表現型に影響するcausal variantsとLDにあるものが偶然含まれる可能性があるから.
 2. 何度も指摘されているように, GWASのサンプルがEUR集団であるということ. EURと非EUR集団で遺伝的な異質性があると, 非EUR集団でのPGSの計算はバイアスを受けることになる. ← しかし, fTIAの計算でも概ねPGSの傾向と一致していたので, 大きな問題は無さそうとのこと. 
 3. 形質と相関する全てのSNPsについてFst (あるいはLD score) を計算しているので, 今回見られた集団間の遺伝的分化が, 異なる遺伝子座に働く自然選択によるものなのか, 同一の遺伝子座だが異なるアリルに働く自然選択によるのか, あるいは同一のアリルだが, 自然選択の程度が集団間で異なるのか, を区別できない. ← ここのロジックはまだちょっと理解できていない. 
 4. 異なるアリルが集団間で選択を受けているように思えるが, background selectionの可能性 (遺伝的分化が強いSNPsは, 負の選択を受けるcausal variantsとLDにあるのでは) も捨てきれない. 実際`SLiM`を使ったforward simulationでは, background selectionが遺伝的多様性を減少させ, 負の選択を受ける変異とLDにある変異について, 集団間の遺伝的分化を高めることが示された. 
@@ -100,7 +114,7 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 #### [Höllinger et al. 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1008035)
 
 #### [Chen et al. 2020](https://www.cell.com/ajhg/pdfExtended/S0002-9297(20)30161-0)
-上記の Berg et al. 2019, Uricchio et al. 2019 等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
+上記の Berg et al. 2019; Uricchio et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
 
 
 ### PGSの計算について
