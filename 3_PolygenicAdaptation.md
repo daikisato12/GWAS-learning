@@ -1,5 +1,13 @@
 ### Polygenic adaptation, PGSと自然選択の関係
 古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, (特にいわゆる複雑な) 形質全体に弱く働く選択を検出することはできない. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている.
+
+#### [McVicker et al. 2009 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1000471)
+他の霊長類とのゲノム比較によるヒトの遺伝的多様性の評価. 保存性の高い領域周辺では, ヒトや古人類の中立な多型は大幅に減少していた. ゲノム全体に遺伝的多様性を失わせる"background selection"が働いている証拠. Hitch-hikingともいわれるが, 有害なサイトに働く負の選択が周囲の連鎖した中立サイトの遺伝的多様性まで減少させるというもの (正の選択の場合も同様に多様性は減少するが, この時は単にpositive selectionと呼ばれる). background selectionを定量するB統計量の提案. <br><br>
+
+<img src="https://latex.codecogs.com/gif.latex?B&space;=&space;B^{(v)}&space;=&space;\frac{\pi_e}{\pi_0}&space;=&space;\frac{N_e}{N_0}&space;\approx&space;\left&space;[&space;-\sum_x&space;\int_0^1&space;\frac{u_x&space;f_x(t)dt}{t(1&plus;(1-t)r_{x,v}/t)^2}&space;\right&space;]" title="B = B^{(v)} = \frac{\pi_e}{\pi_0} = \frac{N_e}{N_0} \approx \left [ -\sum_x \int_0^1 \frac{u_x f_x(t)dt}{t(1+(1-t)r_{x,v}/t)^2} \right ]" /><br>
+
+サイト<img src="https://latex.codecogs.com/gif.latex?v" title="v" />で期待される塩基多様度を<img src="https://latex.codecogs.com/gif.latex?\pi_e" title="\pi_e" />, background selectionが働いていない場合に期待される中立座位の塩基多様度を<img src="https://latex.codecogs.com/gif.latex?\pi_0" title="\pi_0" />, 同様にそれぞれの座位における有効集団サイズの期待値を<img src="https://latex.codecogs.com/gif.latex?N_e" title="N_e" />, <img src="https://latex.codecogs.com/gif.latex?N_0" title="N_0" />とする. 選択されたサイト<img src="https://latex.codecogs.com/gif.latex?x" title="x" />について, <img src="https://latex.codecogs.com/gif.latex?u_x" title="u_x" />はサイト<img src="https://latex.codecogs.com/gif.latex?x" title="x" />における世代あたりの (ハプロイドの) 有害変異の割合, <img src="https://latex.codecogs.com/gif.latex?r_{x,v}" title="r_{x,v}" />はサイト<img src="https://latex.codecogs.com/gif.latex?v" title="v" />と<img src="https://latex.codecogs.com/gif.latex?x" title="x" />の間の世代あたり組換え率. <img src="https://latex.codecogs.com/gif.latex?t" title="t" />はヘテロ接合体に対する選択の強さを示す. <img src="https://latex.codecogs.com/gif.latex?(1-t)" title="(1-t)" />はサイト<img src="https://latex.codecogs.com/gif.latex?x" title="x" />の有害アリルをヘテロで持つ個体の適応度であり, 非有害アリルをホモで持つ個体に対する相対的な値となる. <img src="https://latex.codecogs.com/gif.latex?f_x(t)" title="f_x(t)" />はサイト<img src="https://latex.codecogs.com/gif.latex?x" title="x" />において異なる強さの選択を受けるアリルの確率密度. ヒトゲノムのデータは[ここ](http://www.phrap.org/othersoftware.html)からダウンロード可能.
+
 #### [Pritchard et al. 2010 _Curr. Biol._](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
 #### [Kemper et al. 2014 _BMC Genomics_](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
@@ -22,6 +30,8 @@ SDSを開発した論文. 最近の選択によりアリル頻度が変化した
 #### [Sanjak et al. 2018 _PNAS_](https://www.pnas.org/content/115/1/151)
 
 #### [Novembre & Barton 2018 _Genetics_](https://www.genetics.org/content/208/4/1351)
+
+#### [Okada et al. 2018 _Nat. Commun._](https://www.nature.com/articles/s41467-018-03274-0)
 
 #### [Racimo et al. 2018 _Genetics_](https://www.genetics.org/content/208/4/1565)
 
@@ -46,6 +56,9 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 4. 異なるアリルが集団間で選択を受けているように思えるが, background selectionの可能性 (遺伝的分化が強いSNPsは, 負の選択を受けるcausal variantsとLDにあるのでは) も捨てきれない. 実際`SLiM`を使ったforward simulationでは, background selectionが遺伝的多様性を減少させ, 負の選択を受ける変異とLDにある変異について, 集団間の遺伝的分化を高めることが示された. 
 5. FstやLD scoreにより自然選択を示したのが本研究だが, これらは**いつ**選択が働いたのか, あるいは他の種類の自然選択が生じているのかについては分からない. これについては最近開発された[Admixture graphを用いた手法 (Racimo et al. 2018)](https://www.genetics.org/content/208/4/1565)を参照.
 
+
+#### [Edge & Coop 2019 _Genetics_](https://www.genetics.org/content/211/1/235)
+
 #### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
 ヒトの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量する要約統計量を提案する.
 
@@ -69,8 +82,14 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 #### [Chen et al. 2020 _AJHG_](https://www.cell.com/ajhg/pdfExtended/S0002-9297(20)30161-0)
 `2_PRS_portability.md `で説明した Berg et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
 
+3つの手法を使っている: 1) excess variance test, 2) polygenic height score trajectory, 3) tSDS analysis.
+
+1. Qx testという手法 ([Berg & Coop 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)). 推定されたPGS (population-level) が集団間で遺伝的浮動から期待されるよりも大きな分散を示すかどうかを調べる. <br><br>
+<img src="https://latex.codecogs.com/gif.latex?Q_x&space;=&space;\frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" title="Q_x = \frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" /><br>
+ここで, <img src="https://latex.codecogs.com/gif.latex?\vec{Z}" title="\vec{Z}" /> は調べたい集団におけるgenetic value (population-level PGS)であり, <img src="https://latex.codecogs.com/gif.latex?F" title="F" /> は集団間のアリル頻度の相関行列になる. <img src="https://latex.codecogs.com/gif.latex?V_A" title="V_A" /> は祖先 (global) 集団全体の相加遺伝分散を示す. F行列を作るため, 身長と相関するSNPとMAF, [組換え率](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130507_omni_recombination_rates/), background selection ([B値](http://www.phrap.org/othersoftware.html)) のマッチするランダムな20,000個のSNPを取ってきて計算している. <img src="https://latex.codecogs.com/gif.latex?Q_x" title="Q_x" /> 統計量は自由度 (M-1; Mは集団の数) のカイ二乗分布に従い, ここから漸近的にP値を推定する. 集団間で有意に分散が大きいとき, 異なる自然選択が集団間で生じていると期待される.
+
 ### 関連項目
-- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われる模様. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)のデータを使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
+- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われたりするので, 以下ではその説明をするが, jackknife法自体は汎用的な考え方. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)の[データ](https://bitbucket.org/nygcresearch/ldetect-data/src/master/)を使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
 <img src="https://latex.codecogs.com/gif.latex?\bar{\rho^b}&space;=&space;\frac{1}{b}&space;\sum&space;_{i=1}^b&space;\hat{\rho}^b_{(-i)}" title="\bar{\rho^b} = \frac{1}{b} \sum _{i=1}^b \hat{\rho}^b_{(-i)}" /><br><br>
 で平均の相関係数が求められ, さらに,<br><br>
 <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2&space;=&space;\frac{b-1}{b}&space;\sum_{i=1}^b&space;(\hat{\rho}^b_{(-i)}&space;-&space;\bar{\rho^b})" title="\hat{\sigma}^2 = \frac{b-1}{b} \sum_{i=1}^b (\hat{\rho}^b_{(-i)} - \bar{\rho^b})" /><br><br>
