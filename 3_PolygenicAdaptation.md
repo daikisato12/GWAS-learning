@@ -85,8 +85,11 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 3つの手法を使っている: 1) excess variance test, 2) polygenic height score trajectory, 3) tSDS analysis.
 
 1. Qx testという手法 ([Berg & Coop 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)). 推定されたPGS (population-level) が集団間で遺伝的浮動から期待されるよりも大きな分散を示すかどうかを調べる. <br><br>
-<img src="https://latex.codecogs.com/gif.latex?Q_x&space;=&space;\frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" title="Q_x = \frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" /><br>
+<img src="https://latex.codecogs.com/gif.latex?Q_x&space;=&space;\frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" title="Q_x = \frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" /><br><br>
 ここで, <img src="https://latex.codecogs.com/gif.latex?\vec{Z}" title="\vec{Z}" /> は調べたい集団におけるgenetic value (population-level PGS)であり, <img src="https://latex.codecogs.com/gif.latex?F" title="F" /> は集団間のアリル頻度の相関行列になる. <img src="https://latex.codecogs.com/gif.latex?V_A" title="V_A" /> は祖先 (global) 集団全体の相加遺伝分散を示す. F行列を作るため, 身長と相関するSNPとMAF, [組換え率](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130507_omni_recombination_rates/), background selection ([B値](http://www.phrap.org/othersoftware.html)) のマッチするランダムな20,000個のSNPを取ってきて計算している. <img src="https://latex.codecogs.com/gif.latex?Q_x" title="Q_x" /> 統計量は自由度 (M-1; Mは集団の数) のカイ二乗分布に従い, ここから漸近的にP値を推定する. 集団間で有意に分散が大きいとき, 異なる自然選択が集団間で生じていると期待される.
+
+#### [Liu et al. _bioRxiv_](https://www.biorxiv.org/content/10.1101/357483v2)
+
 
 ### 関連項目
 - Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われたりするので, 以下ではその説明をするが, jackknife法自体は汎用的な考え方. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)の[データ](https://bitbucket.org/nygcresearch/ldetect-data/src/master/)を使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
