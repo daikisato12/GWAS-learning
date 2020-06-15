@@ -1,5 +1,5 @@
 ### Polygenic adaptation, PGSと自然選択の関係
-古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, 形質全体に弱く働く選択を検出することはできない. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている.
+古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, (特にいわゆる複雑な) 形質全体に弱く働く選択を検出することはできない. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている.
 #### [Pritchard et al. 2010 _Curr. Biol._](https://www.cell.com/current-biology/fulltext/S0960-9822(09)02070-3)
 
 #### [Kemper et al. 2014 _BMC Genomics_](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-15-246)
@@ -47,7 +47,20 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 5. FstやLD scoreにより自然選択を示したのが本研究だが, これらは**いつ**選択が働いたのか, あるいは他の種類の自然選択が生じているのかについては分からない. これについては最近開発された[Admixture graphを用いた手法 (Racimo et al. 2018)](https://www.genetics.org/content/208/4/1565)を参照.
 
 #### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
-GIANTデータセットの集団構造の補正が不十分であった可能性を示す. ヒトの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量するようやく統計量を提案する.
+ヒトの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量する要約統計量を提案する.
+
+各SNPの派生型アリルの効果サイズと頻度をプロットしたβDAF plotを見ると, mutational biasと注目している形質に対する選択が分かる. 中立を仮定した帰無仮説では, trait-increasingな効果とtrait-decreasingの効果は同じ確率で生じるので, どのアリル頻度のbinでもβDAFのカーブは平らになるはず. 選択がなくても, mutational biasが強い場合はβの平均値が0からずれる. このβDAF plotのカーブの下側の面積を求め (要は任意の範囲のアリル頻度のbinについて計算されたβの合計値), 以下の通りSβと定義する. <br><br>
+<img src="https://latex.codecogs.com/gif.latex?S_{\beta}(f_i,&space;f_j)&space;=&space;\sum_{y&space;\in&space;Y_{ij}}&space;\bar{\beta}(y)" title="S_{\beta}(f_i, f_j) = \sum_{y \in Y_{ij}} \bar{\beta}(y)" /><br>
+
+選択が働かず, mutational biasのみが存在する時は上述の通り, どのアリル頻度のbinでもβの値は同じになるので, Sβの値も単に各binのβの平均値にbinの数を掛け合わせたものになる (y軸をSβ(0,x), xを横軸にとるグラフを考えると, 単調増加するグラフとなる).
+
+形質に長期間の安定化選択 (最適値があり, そこから下がるのも上がるのも有害となる) が働いている時, TIAとTDAは同等に有害である. さらにmutational biasが存在しない場合, TIAもTDAも同じ確率で生じるので, Sβの期待値は0になる. trait-increasing/decreasingどちらかにmutational biasが存在する場合は, 0から外れた値になる. この時 (選択とmutational biasがどちらも存在する時), 選択により効果の大きなアリルは頻度が上がりづらいので, アリル頻度の低いbinほどβの平均値が大きくなりやすい.
+
+さらに, 進化の過程で形質の最適値にシフトが生じた場合を考える. 例えば形質が増える/高まる方向にシフトが生じると, 頻度の高いSNPの平均効果サイズはプラスになり, Sβ(0,x)のプロットは単調なグラフでなくなり, Sβ(0,1)はプラスに転じる. シフトの時期が古くなればなるほど, TIAは浮動で固定したり消えたりするので, このシグナルは弱くなる.
+
+また, mutational biasが存在せず中立の時, Sβの期待値は0になるが, その分散はcausal alleleとnon-causal alleleの間のLDに依存する. 表現型に全く影響を与えないアリルであっても, このLDによりeffect sizeを持つからである. これを考慮するため, ([ゲノムを1703個に分割した](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)) 各LDブロックについて, そこに含まれる全てのSNPsの効果サイズの符号を (同じ確率で) そのまま or 逆転させることにより, LDによるアリル頻度の分布はそのままに, 効果サイズをランダムにしたSβの帰無分布を作成することができる.
+
+この研究でも, GIANTのデータでは見られたいくつかの自然選択のシグナルがUKBだと見えないことを報告している. しかしBMIとEducational attainmentに関しては同様に観察された模様.
 
 #### [Schoech et al. 2019 _Nat. Commun._](https://www.nature.com/articles/s41467-019-08424-6)
 
@@ -57,7 +70,7 @@ GIANTデータセットの集団構造の補正が不十分であった可能性
 `2_PRS_portability.md `で説明した Berg et al. 2019; Sohail et al. 2019等を受けて, 身長に対するpolygenic adaptationに疑義が生じている. 特にGIANTなどサンプル数が小さな研究で集団構造の補正が不十分であったため, 効果サイズにバイアスが生じていた可能性が指摘されている. 本研究では, ヨーロッパの中で身長の低いサルディーニャ集団に注目し, GIANT, UKBに加えて, Biobank Japan (BBJ) の東アジア集団のデータセットも使い, この疑問を再検証した. その結果, サルディーニャ集団は中立なSNPsセットで計算した時よりも有意に低いPGS (集団レベルの身長に関わるpolygenic score) を示し, またそのPGSはイギリス集団と10,000年前から分化し始めたことが分かった. PGSベースの手法ではヨーロッパ集団に身長に対する適応進化のシグナルは見られなかったが, ハプロタイプベースの手法 (tSDS) で確認された. 
 
 ### 関連項目
-- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われる模様. ゲノム全体を (あるいはLDを考慮して) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
+- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われる模様. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)のデータを使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
 <img src="https://latex.codecogs.com/gif.latex?\bar{\rho^b}&space;=&space;\frac{1}{b}&space;\sum&space;_{i=1}^b&space;\hat{\rho}^b_{(-i)}" title="\bar{\rho^b} = \frac{1}{b} \sum _{i=1}^b \hat{\rho}^b_{(-i)}" /><br><br>
 で平均の相関係数が求められ, さらに,<br><br>
 <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2&space;=&space;\frac{b-1}{b}&space;\sum_{i=1}^b&space;(\hat{\rho}^b_{(-i)}&space;-&space;\bar{\rho^b})" title="\hat{\sigma}^2 = \frac{b-1}{b} \sum_{i=1}^b (\hat{\rho}^b_{(-i)} - \bar{\rho^b})" /><br><br>
