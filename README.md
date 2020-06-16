@@ -7,6 +7,7 @@ GWASに関する個人的なメモを置いています. 随時更新予定.
 | `1_OveralPicture.md` | GWAS全体に関するメモ |
 | `2_PRS_portability.md` | PRSの運用に関するメモ |
 | `3_PolygenicAdaptation.md` | Polygenic Adaptationに関するメモ |
+| `4_AssociationMethods.md` | 相関解析手法に関するメモ |
 
 ### 参考書
 <img src="figure.jpg" height="300"><br>
