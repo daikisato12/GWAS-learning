@@ -10,7 +10,7 @@
 #### [Wu et al. 2011 _AJHG_](https://www.cell.com/ajhg/fulltext/S0002-9297(11)00222-9)
 `SKAT`という手法の提案.
 
-#### [Inonita-Laza et al. 2013 _AJHG_](https://www.sciencedirect.com/science/article/pii/S0002929713001766)
+#### [Inonita-Laza et al. 2013 _AJHG_](https://www.cell.com/ajhg/fulltext/S0002-9297(13)00176-6)
 
 #### [Carbonetto & Stephens 2013 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003770)
 
