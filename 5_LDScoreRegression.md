@@ -6,7 +6,7 @@
 
 <img src="https://latex.codecogs.com/gif.latex?E[\chi^2&space;|&space;l_j]&space;=&space;Nh^2l_j&space;/&space;M&space;&plus;&space;Na&space;&plus;&space;1" title="E[\chi^2 | l_j] = Nh^2l_j / M + Na + 1" /><br>
 
-ここで<img src="https://latex.codecogs.com/gif.latex?N" title="N" />はサンプルサイズ, <img src="https://latex.codecogs.com/gif.latex?M" title="M" />はSNPの総数, <img src="https://latex.codecogs.com/gif.latex?h^2" title="h^2" />は遺伝率なので, <img src="https://latex.codecogs.com/gif.latex?h^2/M" title="h^2/M" />はSNPあたりの平均遺伝率である. <img src="https://latex.codecogs.com/gif.latex?a" title="a" />はcryptic relatednessやpopulation stratificationといった交絡要因の強さの指標である. また, 注目しているSNPと他の全てのSNPとのLD(r^2)の和である<br><br>
+ここで<img src="https://latex.codecogs.com/gif.latex?N" title="N" />はサンプルサイズ, <img src="https://latex.codecogs.com/gif.latex?M" title="M" />はSNPの総数, <img src="https://latex.codecogs.com/gif.latex?h^2" title="h^2" />は遺伝率なので, <img src="https://latex.codecogs.com/gif.latex?h^2/M" title="h^2/M" />はSNPあたりの平均遺伝率である. <img src="https://latex.codecogs.com/gif.latex?a" title="a" />はcryptic relatednessやpopulation stratificationといった交絡要因の強さの指標である. また, 注目しているSNPと他の全てのSNPとのLD (r^2) の和である<br><br>
 
 <img src="https://latex.codecogs.com/gif.latex?l_j&space;=&space;\sum_k&space;r_{jk}^2" title="l_j = \sum_k r_{jk}^2" /><br>
 
@@ -17,3 +17,6 @@ LD score regressionを開発した論文.
 
 #### [Finucane et al. 2015 _Nat. Genet._](https://www.nature.com/articles/ng.3404)
 Stratified LD score regressionを開発した論文. 上記のカイ二乗統計量の式について, SNPあたりの遺伝率とLD scoreの部分をカテゴリー群ごとに分割することで, 各SNPカテゴリーの遺伝率への貢献度を評価することができる.
+
+#### [Finucane et al. 2018 _Nat. Genet._](https://www.nature.com/articles/s41588-018-0081-4)
+LDSC-SEGを開発. 組織横断的トランスクリプトーム解析により, 組織特異的に発現する遺伝子 (Specifically Expressed Genes) を特定することで, 上記カテゴリーのエンリッチメント解析を組織特異性で評価できるという手法.
