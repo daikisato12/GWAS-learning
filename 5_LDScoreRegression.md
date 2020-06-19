@@ -10,10 +10,10 @@
 
 <img src="https://latex.codecogs.com/gif.latex?l_j&space;=&space;\sum_k&space;r_{jk}^2" title="l_j = \sum_k r_{jk}^2" /><br>
 
-がSNP<img src="https://latex.codecogs.com/gif.latex?j" title="j" />のLD scoreと定義される. 
+がSNP<img src="https://latex.codecogs.com/gif.latex?j" title="j" />のLD scoreと定義される. つまり, 各SNPは周囲のSNPとLDの関係にあるので, 各SNPの効果サイズには, 周囲のSNPの効果サイズも含まれているという考え方である. したがって, LD scoreが大きいSNPは, そうでないSNPに比べて, 平均的には効果サイズも大きくなる. これには, LD scoreの大きいSNPの効果サイズが実際に大きい場合と, 多くの効果の弱いSNPを引っ張っている場合, もしくはその両方が考えられる.
 
 #### [Bulik-Sullivan et al. 2015 _Nat. Genet._](https://www.nature.com/articles/ng.3211)
 LD score regressionを開発した論文.
 
 #### [Finucane et al. 2015 _Nat. Genet._](https://www.nature.com/articles/ng.3404)
-Stratified LD score regressionを開発した論文.
+Stratified LD score regressionを開発した論文. 上記のカイ二乗統計量の式について, SNPあたりの遺伝率とLD scoreの部分をカテゴリー群ごとに分割することで, 各SNPカテゴリーの遺伝率への貢献度を評価することができる.
