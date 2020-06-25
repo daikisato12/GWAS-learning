@@ -1,5 +1,7 @@
-### Polygenic adaptation, PGSと自然選択の関係
-古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, (特にいわゆる複雑な) 形質全体に弱く働く選択を検出することはできない. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている.
+### Polygenic adaptation/selection
+古典的なSelection scanでは, 少数の大きな効果を持つ遺伝子座は特定できても, (特にいわゆる複雑な) 形質全体に弱く働く選択を検出することはできなかった. 大規模なGWASが可能になった今, Polygenicに働く自然選択の検出はここ数年ホットなトピックとなっている. 
+
+必ずしもPGSを使うものばかりではない. 古典的な集団遺伝学的統計量に対し, 近年の手法はコアレセント理論をベースに (e.g. ancestral recombination graph) 大規模なサンプルから描かれた各変異の系図から自然選択の強さを推定するような手法が多い (e.g. `SDS`, `ASMC`, `Relate`).
 
 #### [McVicker et al. 2009 _PLoS Genet._](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1000471)
 他の霊長類とのゲノム比較によるヒトの遺伝的多様性の評価. 保存性の高い領域周辺では, ヒトや古人類の中立な多型は大幅に減少していた. ゲノム全体に遺伝的多様性を失わせる"background selection"が働いている証拠. Hitch-hikingともいわれるが, 有害なサイトに働く負の選択が周囲の連鎖した中立サイトの遺伝的多様性まで減少させるというもの (正の選択の場合も同様に多様性は減少するが, この時は単にpositive selectionと呼ばれる). background selectionを定量するB統計量の提案. <br><br>
@@ -20,7 +22,7 @@
 本研究では, genetic valueの同時 (確率) 分布を求める集団遺伝学的なモデリングにより, 集団構造の効果を取り除くことで, 遺伝的浮動の効果ではなく自然選択がどのように遺伝子座に働くかを示している. 有意に選択が働いている遺伝子座を特定するだけでなく, 選択が働いている集団を特定することも可能.
 
 #### [Field et al. 2016 _Science_](https://science.sciencemag.org/content/354/6313/760)
-SDSを開発した論文. 最近の選択によりアリル頻度が変化した時, その二つのアリルそれぞれのコアレセント時間の分布に違いが生まれるだろうというアイデア. 一気に広がったハプロタイプ (tip lengthが短い) は周辺のシングルトンの密度が低いのに対し, 選択を受けていない (tip lengthが相対的に長い) ハプロタイプは, 周辺に多くのシングルトンがあるため, 最近傍のシングルトンまでの距離が短い. この最近傍シングルトンまでの距離から, tip lengthを最尤推定する. 標準化前のSDS*は, 各個体のコアレセントツリーから, 祖先型/派生型アリルを持つ個体の平均tip length (<img src="https://latex.codecogs.com/gif.latex?\hat{t}_A" title="\hat{t}_A" />および<img src="https://latex.codecogs.com/gif.latex?\hat{t}_D" title="\hat{t}_D" />; 各アリルについて最尤推定される) により, 以下の式で定義される. [コードのリンクはこちら](https://github.com/yairf/SDS). <br><br>
+`SDS`を開発した論文. 最近の選択によりアリル頻度が変化した時, その二つのアリルそれぞれのコアレセント時間の分布に違いが生まれるだろうというアイデア. 一気に広がったハプロタイプ (tip lengthが短い) は周辺のシングルトンの密度が低いのに対し, 選択を受けていない (tip lengthが相対的に長い) ハプロタイプは, 周辺に多くのシングルトンがあるため, 最近傍のシングルトンまでの距離が短い. この最近傍シングルトンまでの距離から, tip lengthを最尤推定する. 標準化前のSDS*は, 各個体のコアレセントツリーから, 祖先型/派生型アリルを持つ個体の平均tip length (<img src="https://latex.codecogs.com/gif.latex?\hat{t}_A" title="\hat{t}_A" />および<img src="https://latex.codecogs.com/gif.latex?\hat{t}_D" title="\hat{t}_D" />; 各アリルについて最尤推定される) により, 以下の式で定義される. [コード](https://github.com/yairf/SDS)/[計算済みスコア](https://datadryad.org/stash/dataset/doi:10.5061/dryad.kd58f). <br><br>
 <img src="https://latex.codecogs.com/gif.latex?SDS*&space;=&space;log(\frac{\hat{t}_A}{\hat{t}_D})" title="SDS* = log(\frac{\hat{t}_A}{\hat{t}_D})" />
 
 #### [Jain & Stephan 2017 _Genetics_](https://www.genetics.org/content/206/1/389.long)
@@ -32,6 +34,9 @@ SDSを開発した論文. 最近の選択によりアリル頻度が変化した
 #### [Novembre & Barton 2018 _Genetics_](https://www.genetics.org/content/208/4/1351)
 
 #### [Okada et al. 2018 _Nat. Commun._](https://www.nature.com/articles/s41467-018-03274-0)
+
+#### [Palamara et al. 2018 _Nat. Genet._](https://www.nature.com/articles/s41588-018-0177-x)
+`ASMC`を開発した論文. Pair-wise coalescence timeを推定する手法 (`PSMC`など) を改良して各座位について効率的にコアレセント時間を推定できるようにした. 
 
 #### [Racimo et al. 2018 _Genetics_](https://www.genetics.org/content/208/4/1565)
 
@@ -58,6 +63,7 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 
 
 #### [Edge & Coop 2019 _Genetics_](https://www.genetics.org/content/211/1/235)
+典型的な集団遺伝学的手法ではPolygenicな形質にかかる選択圧を検出できない. 集団平均のPGSの時間的変化をコアレセントツリーによって推定する手法を提案. 推定はツリーの枝長とアリル頻度の変化を関連づけることでなされる. イントロも良くまとまっていて勉強になる.
 
 #### [Uricchio et al. 2019 _Evol. Lett_](https://onlinelibrary.wiley.com/doi/full/10.1002/evl3.97)
 ヒトの複雑な形質に働く自然選択を議論する上で先行研究が見落としがちだったmutational bias (新たな変異がある形質を増加させたり減少させやすいという傾向) に着目している. こうしたバイアスがあると, 若い (頻度の低い) アリルにばかりTIAがある, みたいな状況が生まれるかもしれない. アリル頻度と効果サイズの関係性を定量する要約統計量を提案する.

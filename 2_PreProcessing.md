@@ -19,7 +19,7 @@
 - [`SHAPEIT4`](https://www.nature.com/articles/s41467-019-13225-y): 最近開発されたらしい. `Beagle5`や`Eagle2`よりも高速.
 
 ### Imputation
-GWASにおいて, 解析に用いることのできる遺伝的変異の数が多いほど検出力が上がると考えられる. また, 他のデータセットで使用されるSNPsとの重なりも増えることから, メタ解析も容易になる. 一方で, サンプル数が100万人単位にまで激増している現在, 全ゲノムシーケンスを全サンプルに施すのは不可能であり, 多くの研究ではArrayやChipによるgenotypingが行われている. こうしたArrayデータでgenotypingがなされなかった変異について, 同一集団のリファレンスパネルを用いて推定するのがImputationである.
+GWASでは, 解析に用いることのできる遺伝的変異の数が多いほど検出力が上がると考えられる. また, 他のデータセットで使用されるSNPsとの重なりも増えることから, メタ解析も容易になる. 一方で, サンプル数が100万人単位にまで激増している現在, 全サンプルに対して全ゲノムシーケンスを施すのは不可能であり, 多くの研究ではExomeに限った数万~数10万程度のArrayやChipによるgenotypingが行われている. こうしたArrayデータでは遺伝子型が判明されなかった変異について, 同一集団のリファレンスパネル (周囲の座位との連鎖情報) を用いて推定するのがImputationである.
 - [Haplotype Reference Panel](https://www.nature.com/articles/ng.3643): Imputationに使われるレファレンスパネル.
 - [`Minimac3`](https://www.nature.com/articles/ng.3656): 
 - [`MaCH`](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.20533): 
