@@ -31,8 +31,11 @@
 #### Gene (region)-baseモデル
 頻度の低いアリルに関しては, variantベースの手法では検出力が低いという問題があるので, 遺伝子あるいは領域ベースの手法がよく用いられる.
 - `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 2010年. 遺伝子単位の相関解析手法の一種だが, enrichしているパスウェイの特定に使われる.
+- `ANNOVAR`: [元論文](https://academic.oup.com/nar/article/38/16/e164/1749458), [Webページ](https://doc-openbio.readthedocs.io/projects/annovar/en/latest/). 2010年. 検出された遺伝的変異の遺伝子や機能のアノテーションに使われる. 
+- `MAGMA`: [元論文](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219).
+- `FUMA`: [元論文](https://www.nature.com/articles/s41467-017-01261-5), [リンク](https://github.com/Kyoko-wtnb/FUMA-webapp/). 2017年. webベースのアプリケーション. eQTLやCADD score, Hi-C, GWAS catalogなど複数の情報を元に, GWAS summary statisticsや遺伝子リストをインプットにすると機能的なアノテーションをしてくれたり, gene set enrichmentや組織特異的発現などを可視化してくれる.
 - `SMMAT`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(18)30465-8). 2019年. 遺伝子単位の相関解析手法. 集団構造や血縁関係を補正するため, 一般化線形混合モデルを採用. O(N^3)の計算時間とO(N^2)のメモリ使用量がネックだった (下の`SAIGE-GENE`では改善).
-- `SAIGE-GENE`: [元論文](https://www.biorxiv.org/content/10.1101/583278v2). 2020年. 2020年6月時点で一番新しい, 遺伝子 (or 領域) 単位の相関解析手法. 近縁関係にある個体も使うことができるので, サンプルサイズを増やすことができるという利点がある. `SAGE`同様, 2値形質を対象とする.
+- `SAIGE-GENE`: [元論文](https://www.nature.com/articles/s41588-020-0621-6). 2020年. 2020年6月時点で一番新しい, 遺伝子 (or 領域) 単位の相関解析手法. 近縁関係にある個体も使うことができるので, サンプルサイズを増やすことができるという利点がある. `SAIGE`同様, 2値形質を対象とする.
 #### その他
 - `METAL`: [元論文](https://academic.oup.com/bioinformatics/article/26/17/2190/198154), [Webページ](https://genome.sph.umich.edu/wiki/METAL). GWASのメタ解析手法.
 - `GIANT`: [GWASのSummary Statisticsをまとめているデータベース](https://portals.broadinstitute.org/collaboration/giant/index.php/GIANT_consortium_data_files). ここには主にanthropometric (身長やBMIなど体型に関わる) データが置かれており, これを使ったメタ解析もよく行われる. これ以外にも様々なデータベースにGWASのSummary Statisticsデータは置かれている. [この論文](https://www.nature.com/articles/ng.3406)など参照. 例として[PGC (Psychiatric Genomics Consortium)](https://www.med.unc.edu/pgc/download-results/) が挙げられる. [Neale Lab](http://www.nealelab.is/uk-biobank)がUK Biobankのデータをまとめている. 日本人のデータであればRIKENの[JENGER](http://jenger.riken.jp/en/)がまとめているものもある.
