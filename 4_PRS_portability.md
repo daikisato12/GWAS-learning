@@ -69,4 +69,4 @@ _結局, 集団間で頻度に差が大きいSNPsは, 自然選択が働いて�
 ### PGSの計算について
 - `LDpred`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), [リンク](https://github.com/bvilhjal/ldpred). GWASで出力された各SNPの効果サイズを, その集団のLD情報を用いて補正するというもの. 特にサンプルサイズが大きいと, LD clumping → P値の閾値設定 よりも正確らしい.
 - `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info). 複数のP値/LDの閾値で計算し, 最も説明力の高い条件探索を行うことができる. また複数形質も一度に計算してくれる.
-- 予測性能をどう表現するか: 実際の表現型とPGSの間の決定係数 (R^2) がよく使われる. ただ[色々な補正手法が開発されている](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.21614).
+- 予測性能をどう表現するか: 実際の表現型とPGSの間の決定係数 (R^2) がよく使われる. ただ[色々な補正手法が開発されている](https://onlinelibrary.wiley.com/doi/full/10.1002/gepi.21614). Nagelkerke’s R^2 というのをよく見る. 

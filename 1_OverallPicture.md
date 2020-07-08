@@ -15,7 +15,7 @@
 - Hardy–Weinberg Equilibriumに沿わない (e.g. p < 1×10^–6) SNPsは除く.
 
 慣習みたいなもの
-- 0.05を100万 (一般に解析に用いるSNPsが100万あるとして) で割った, 5.0 × 10^-8 がSNPの優位性を示すP値の閾値として使われることが多い. 1.0 × 10^-6 をsuggestive levelとすることもある.
+- 0.05を100万 (一般に解析に用いるSNPsが100万あるとして) で割った, 5.0 × 10^-8 がSNPの有意性を示すP値の閾値として使われることが多い. 1.0 × 10^-6 をsuggestive levelとすることもある.
 
 ### 使われる手法
 基本的にはどれも線形混合モデルをベースとしており, 大きくは変わらない (気がする) が, サンプル数/SNP数の増加に伴い, 計算時間とメモリ使用量が膨大に増えてきたので, それを抑えつつ, 真のシグナルを捉えられるよう微調整が加えられてきたというイメージ. [この論文](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-020-6552-x)のイントロで各手法の (長所) 短所が紹介されている. 量的形質なら`BOLT-LMM`, 2値形質 (疾患かどうか等) なら`SAIGE`が現時点 (2020/6) ではベストという印象を受けた.
@@ -32,7 +32,7 @@
 頻度の低いアリルに関しては, variantベースの手法では検出力が低いという問題があるので, 遺伝子あるいは領域ベースの手法がよく用いられる.
 - `MAGENTA`: [元論文](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1001058), [Webページ](https://software.broadinstitute.org/mpg/magenta/). 2010年. 遺伝子単位の相関解析手法の一種だが, enrichしているパスウェイの特定に使われる.
 - `ANNOVAR`: [元論文](https://academic.oup.com/nar/article/38/16/e164/1749458), [Webページ](https://doc-openbio.readthedocs.io/projects/annovar/en/latest/). 2010年. 検出された遺伝的変異の遺伝子や機能のアノテーションに使われる. 
-- `MAGMA`: [元論文](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219).
+- `MAGMA`: [元論文](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219). 2015年.
 - `FUMA`: [元論文](https://www.nature.com/articles/s41467-017-01261-5), [リンク](https://github.com/Kyoko-wtnb/FUMA-webapp/). 2017年. webベースのアプリケーション. eQTLやCADD score, Hi-C, GWAS catalogなど複数の情報を元に, GWAS summary statisticsや遺伝子リストをインプットにすると機能的なアノテーションをしてくれたり, gene set enrichmentや組織特異的発現などを可視化してくれる.
 - `SMMAT`: [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(18)30465-8). 2019年. 遺伝子単位の相関解析手法. 集団構造や血縁関係を補正するため, 一般化線形混合モデルを採用. O(N^3)の計算時間とO(N^2)のメモリ使用量がネックだった (下の`SAIGE-GENE`では改善).
 - `SAIGE-GENE`: [元論文](https://www.nature.com/articles/s41588-020-0621-6). 2020年. 2020年6月時点で一番新しい, 遺伝子 (or 領域) 単位の相関解析手法. 近縁関係にある個体も使うことができるので, サンプルサイズを増やすことができるという利点がある. `SAIGE`同様, 2値形質を対象とする.
