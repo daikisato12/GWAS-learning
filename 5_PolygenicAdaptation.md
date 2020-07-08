@@ -93,7 +93,17 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 1. Qx testという手法 ([Berg & Coop 2014](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004412)). 推定されたPGS (population-level) が集団間で遺伝的浮動から期待されるよりも大きな分散を示すかどうかを調べる. <br><br>
 <img src="https://latex.codecogs.com/gif.latex?Q_x&space;=&space;\frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" title="Q_x = \frac{\vec{Z'}^TF^{-1}\vec{Z'}}{2V_A}" /><br><br>
 ここで, <img src="https://latex.codecogs.com/gif.latex?\vec{Z}" title="\vec{Z}" /> は調べたい集団におけるgenetic value (population-level PGS)であり, <img src="https://latex.codecogs.com/gif.latex?F" title="F" /> は集団間のアリル頻度の相関行列になる. <img src="https://latex.codecogs.com/gif.latex?V_A" title="V_A" /> は祖先 (global) 集団全体の相加遺伝分散を示す. F行列を作るため, 身長と相関するSNPとMAF, [組換え率](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130507_omni_recombination_rates/), background selection ([B値](http://www.phrap.org/othersoftware.html)) のマッチするランダムな20,000個のSNPを取ってきて計算している. <img src="https://latex.codecogs.com/gif.latex?Q_x" title="Q_x" /> 統計量は自由度 M-1 (Mは集団の数) のカイ二乗分布に従い, ここから漸近的にP値を推定する. 集団間で有意に分散が大きいとき, 異なる自然選択が集団間で生じていると期待される. <br>
-さらに, どの集団が過分散に寄与しているか調べるため, Z szoreを計算する. M個の集団の中から1つを選択し, それを除いた残りの集団について計算したgenetic valuesから, genetic valueの平均と分散の期待値を計算する. それらを全集団に行い, 計算されたM個の平均と分散について共分散行列を作成する.
+さらに, どの集団が過分散に寄与しているか調べるため, Z scoreを計算する. M個の集団の中から1つを選択し, それを除いた残りの集団について計算したgenetic valueとそれらの共分散行列から, 除いた集団のgenetic valueの平均と分散の期待値を計算する. その推定値が, 残りの集団に対して遺伝的浮動を仮定した場合に計算されるgenetic valueにどれほど当てはまるかをZ scoreで表す (ちょっと何言っているか分からない). とにかく極端なZ scoreは, 残りの集団がその形質に関しては経験していない方向性選択を除かれた集団が経験していることを示唆するらしい.
+
+2. Polygenic Height Score trajectory. [Edge & Coop 2019](https://www.genetics.org/content/211/1/235)で提唱されたPGSの時間変化をコアレセントで追う手法, 実装は`RELATE`でなされる. 要はアリル頻度に効果サイズを掛け合わせた集団レベルのPGSを計算していくわけだが, この時アリル頻度を推定するために以下の3つの計算方法が用いられる (Edge & Coop, 2019)が, 今回は先行研究でも最も検出力が高いとされている(1)に注目している. 
+
+    (1) the proportion-of-lineages estimator. 注目しているアリルを持つ系統の割合.
+
+    (2) the waiting-time estimator. コアレセントイベントの間の待ち時間を使って, 祖先/派生アリルを持つ二つのサブ集団の相対的なサイズを使う.
+
+    (3) the lineages-remaining estimator. 特定の2つの時間の間のコアレセントイベントの回数を使って, (2)と同様に二つの集団の相対的なサイズを推定し, アリル頻度の指標とする.
+
+3. tSDS.
 
 #### [Liu et al. _bioRxiv_](https://www.biorxiv.org/content/10.1101/357483v2)
 
