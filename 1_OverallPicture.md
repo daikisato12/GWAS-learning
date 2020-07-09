@@ -46,7 +46,7 @@
   - よく使われるソフトウェア: `LDSC` ([リンク](https://github.com/bulik/ldsc)).
 - `Polygenic score (PGS)`: 特に疾患を対象にする場合はpolygenic risk score (PRS), risk profile scoring, genetic risk scoring, またgenotype score, genetic scoringなどと呼ばれたりもする. 注目している形質に各SNPj (計M個のSNPs) が与える効果サイズwj (通常GWASの結果そのままでなく, PGSの計算に使うSNPsの値だけで標準化?) を線型結合した値として, 各個体iについて以下の式で定義され, その個体の, 注目している表現型に対する遺伝的なリスクを表す (aij = {0, 1, 2}の値を取り,それぞれ遺伝子型 0/0, 0/1, 1/1に対応). <br>
 <img src="https://latex.codecogs.com/gif.latex?PGS_i&space;=&space;\sum&space;_{j=1}&space;^M&space;a_{ij}w_j" title="PGS_i = \sum _{j=1} ^M a_{ij}w_j" /> <br>
-しかし当然, 単純な線形結合で表すので, 劣性/顕性以外の複雑な遺伝様式は仮定しないし, 遺伝子間の相互作用 (epistasis) も考えない.<br>
+しかし当然, 単純な線形結合で表すので, 潜性/顕性以外の複雑な遺伝様式は仮定しないし, 遺伝子間の相互作用 (epistasis) も考えない.<br>
 どのSNPsをPRSの計算に用いるかについて, GWASで有意となった (一般に閾値として p < 5.0×10^-8 が使われる) SNPsだけでもいいし, 全てのSNPsを使ってもいい. これは注目している表現型や目的による. polygenicな背景がないと考えられる表現型であれば, より厳しい閾値でSNPsを減らすのがいいが, そうでなければ逆である. 用いるSNPsを増やせば予測能力が上がる気がするが, 実際にはノイズも増やすので, ここにトレードオフが存在する.<br>
 PGSの運用においては, まず"Discovery/Base"集団にGWASを行った上で, 独立した"Target"集団にその結果を用いて, その予測性能を確認するという一連の流れが取られる. この時, 様々なP値の閾値を設定し, PRSの計算に用いるSNPsを決めるようである. また, [Discovery集団とTarget集団が遺伝的に離れていると, 正確な予測ができないことが知られている](https://www.cell.com/ajhg/fulltext/S0002-9297(17)30107-6).
   - よく使われるソフトウェア: `LDpred` [元論文](https://www.cell.com/ajhg/fulltext/S0002-9297(15)00365-1), `PRSice` [元論文](https://academic.oup.com/bioinformatics/article/31/9/1466/200539) / [PRSice2](https://academic.oup.com/gigascience/article/8/7/giz082/5532407), [リンク](https://www.prsice.info).
