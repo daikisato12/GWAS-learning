@@ -95,7 +95,7 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 ここで, <img src="https://latex.codecogs.com/gif.latex?\vec{Z}" title="\vec{Z}" /> は調べたい集団におけるgenetic value (population-level PGS)であり, <img src="https://latex.codecogs.com/gif.latex?F" title="F" /> は集団間のアリル頻度の相関行列になる. <img src="https://latex.codecogs.com/gif.latex?V_A" title="V_A" /> は祖先 (global) 集団全体の相加遺伝分散を示す. F行列を作るため, 身長と相関するSNPとMAF, [組換え率](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130507_omni_recombination_rates/), background selection ([B値](http://www.phrap.org/othersoftware.html)) のマッチするランダムな20,000個のSNPを取ってきて計算している. <img src="https://latex.codecogs.com/gif.latex?Q_x" title="Q_x" /> 統計量は自由度 M-1 (Mは集団の数) のカイ二乗分布に従い, ここから漸近的にP値を推定する. 集団間で有意に分散が大きいとき, 異なる自然選択が集団間で生じていると期待される. <br>
 さらに, どの集団が過分散に寄与しているか調べるため, Z scoreを計算する. M個の集団の中から1つを選択し, それを除いた残りの集団について計算したgenetic valueとそれらの共分散行列から, 除いた集団のgenetic valueの平均と分散の期待値を計算する. その推定値が, 残りの集団に対して遺伝的浮動を仮定した場合に計算されるgenetic valueにどれほど当てはまるかをZ scoreで表す (ちょっと何言っているか分からない). とにかく極端なZ scoreは, 残りの集団がその形質に関しては経験していない方向性選択を除かれた集団が経験していることを示唆するらしい.
 
-2. Polygenic Height Score trajectory. [Edge & Coop 2019](https://www.genetics.org/content/211/1/235)で提唱されたPGSの時間変化をコアレセントで追う手法, 実装は`RELATE`でなされる. 要はアリル頻度に効果サイズを掛け合わせた集団レベルのPGSを計算していくわけだが, この時アリル頻度を推定するために以下の3つの計算方法が用いられる (Edge & Coop, 2019)が, 今回は先行研究でも最も検出力が高いとされている(1)に注目している. 
+2. Polygenic Height Score trajectory. [Edge & Coop 2019](https://www.genetics.org/content/211/1/235)で提唱されたPGSの時間変化をコアレセントで追う手法, 実装は`RELATE`でなされる. 要はアリル頻度に効果サイズを掛け合わせた集団レベルのPGSを計算していくわけだが, 各時点のアリル頻度を推定するために以下の3つの計算方法が用いられる (Edge & Coop, 2019)が, 今回は先行研究でも最も検出力が高いとされている(1)に注目している. 
 
     (1) the proportion-of-lineages estimator. 注目しているアリルを持つ系統の割合.
 
@@ -110,7 +110,7 @@ _統合失調症 (おそらく他の精神疾患も) の遺伝的リスクがAFR
 #### [Holland et al. _bioRxiv_](https://www.biorxiv.org/content/10.1101/705285v8)
 
 ### 関連項目
-- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われたりするので, 以下ではその説明をするが, jackknife法自体は汎用的な考え方. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)の[データ](https://bitbucket.org/nygcresearch/ldetect-data/src/master/)を使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, 上記i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
+- Blocked-jackknife法: tSDSとGWASのP値との相関を計算する際に使われたりするので, 以下ではその説明をするが, jackknife法自体は汎用的な考え方. ゲノム全体を (あるいはLDを考慮して; [この論文](https://academic.oup.com/bioinformatics/article/32/2/283/1743626)の[データ](https://bitbucket.org/nygcresearch/ldetect-data/src/master/)を使うこともある) 数百のブロックに分け, それぞれのブロックについて, それ以外の全てのブロックに含まれるSNPについて相関係数を計算する, という手順をブロックの数だけ繰り返す. ブロックの数をbとし, i番目のブロックを除いた計算により求められるスピアマンの相関係数を<img src="https://latex.codecogs.com/gif.latex?\hat{\rho}^b_{(-i)}" title="\hat{\rho}^b_{(-i)}" />とすると, <br><br>
 <img src="https://latex.codecogs.com/gif.latex?\bar{\rho^b}&space;=&space;\frac{1}{b}&space;\sum&space;_{i=1}^b&space;\hat{\rho}^b_{(-i)}" title="\bar{\rho^b} = \frac{1}{b} \sum _{i=1}^b \hat{\rho}^b_{(-i)}" /><br><br>
 で平均の相関係数が求められ, さらに,<br><br>
 <img src="https://latex.codecogs.com/gif.latex?\hat{\sigma}^2&space;=&space;\frac{b-1}{b}&space;\sum_{i=1}^b&space;(\hat{\rho}^b_{(-i)}&space;-&space;\bar{\rho^b})" title="\hat{\sigma}^2 = \frac{b-1}{b} \sum_{i=1}^b (\hat{\rho}^b_{(-i)} - \bar{\rho^b})" /><br><br>
